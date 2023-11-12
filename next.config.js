@@ -4,6 +4,11 @@ const nextConfig = {
     MONGODB_URL: process.env.MONGODB_URL,
   },
   reactStrictMode: true,
+  images: {
+    domains: ['flagcdn.com', 'upload.wikimedia.org', 'restcountries.com'],
+  },
 }
 
 module.exports = nextConfig
+
+//

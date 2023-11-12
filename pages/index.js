@@ -1,87 +1,119 @@
-import dynamic from 'next/dynamic'
+import { useEffect, useState } from 'react'
+import { Pagination, Autoplay, A11y } from 'swiper/modules'
+import { EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Pagination, Autoplay } from 'swiper'
+import SwiperCore from 'swiper'
+import Image from 'next/image'
+
 // Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/pagination'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
-import 'swiper/css/effect-fade'
-import 'swiper/css/effect-cube'
-import 'swiper/css/effect-flip'
-import 'swiper/css/effect-coverflow'
-
-import Image from 'next/image'
 
 const Home = () => {
   SwiperCore.use([Autoplay])
+
+  // use api to get all cuntries and map them to select options, from https://restcountries.com/v3.1/all api
+  const [countries, setCountries] = useState([])
+  useEffect(() => {
+    const fetchCountries = async () => {
+      // use fetch api to get all countries only
+      const res = await fetch('https://restcountries.com/v3.1/all')
+      const data = await res.json()
+      // console.log(data)
+      // set countries to data
+      setCountries(data)
+    }
+    fetchCountries()
+  }, [])
+
   return (
-    <main className="">
+    <main>
       <Swiper
-        modules={[Pagination]}
+        // install Swiper modules
+        modules={[Pagination, A11y, EffectCards]}
+        spaceBetween={50}
+        slidesPerView={1}
         loop={true}
         autoplay={{
-          delay: 3000,
+          delay: 2500,
+          disableOnInteraction: false,
         }}
-        slidesPerView={1}
         pagination={{ clickable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
       >
-        <div className="">
-          <div className="relative">
-            <SwiperSlide>
-              <Image
-                src="/images/demos/demo1/sliders/slide-3.jpg"
-                alt="My Image"
-                width={1000}
-                height={600}
-              />
-
-              <div className="absolute bottom-10 sm:bottom-16 left-10 sm:left-16 text-white">
-                <p className="text-xl font-normal">test</p>
-                <h2 className="my-4 font-bold text-4xl lg:text-6xl">test</h2>
-                <p className="mb-4 text-xl font-thin">test</p>
-                <button>tets</button>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="/images/demos/demo1/sliders/slide-3.jpg"
-                alt="My Image"
-                width={1000}
-                height={600}
-              />
-
-              <div className="absolute bottom-10 sm:bottom-16 left-10 sm:left-16 text-white">
-                <p className="text-xl font-normal">test</p>
-                <h2 className="my-4 font-bold text-4xl lg:text-6xl">test</h2>
-                <p className="mb-4 text-xl font-thin">test</p>
-                <button>tets</button>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="/images/demos/demo1/sliders/slide-3.jpg"
-                alt="My Image"
-                width={1000}
-                height={600}
-              />
-
-              <div className="absolute bottom-10 sm:bottom-16 left-10 sm:left-16 text-white">
-                <p className="text-xl font-normal">test</p>
-                <h2 className="my-4 font-bold text-4xl lg:text-6xl">test</h2>
-                <p className="mb-4 text-xl font-thin">test</p>
-                <button>tets</button>
-              </div>
-            </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/images/slider-background-girl.jpg"
+            alt="slider-image"
+            height={300}
+            width={700}
+            className="h-[300px] w-full"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/images/slider-background-human.jpg"
+            alt="slider-image"
+            height={300}
+            width={700}
+            className="h-[300px] w-full"
+          />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Image
+            src="/images/slider-background.jpg"
+            alt="slider-image"
+            height={300}
+            width={700}
+            className="h-[300px] w-full"
+          />
+        </SwiperSlide>
+      </Swiper>
+      <div className="flex">
+        <div className="flex-1"></div>
+        <div className="flex-1">
+          <h3>Apple iPhones</h3>
+          <hr />
+          <h2>iPhone 14 Pro Max</h2>
+          <hr />
+          <div className="flex">
+            <p>Model: </p>
+            <button>iPhone 14</button>
+            <button>iPhone 14 Pro Max</button>
+          </div>
+          <div className="flex">
+            <p>Color: </p>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+          </div>
+          <div className="flex">
+            <p>Storage: </p>
+            <button>128GB</button>
+            <button>256GB</button>
+            <button>512GB</button>
+          </div>
+          <hr />
+          <div className="flex">
+            <p>Nationality: </p>
+            {/* also show flag with country name*/}
+            <select>
+              {countries.map((country) => (
+                <option key={country.name.common} value={country.name.common}>
+                  {country.name.common}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      </Swiper>
+      </div>
     </main>
   )
 }
 
 export default Home
-
-// style="background-image: url(&quot;/static/images/demos/demo1/sliders/slide-3.jpg&quot;); background-color: rgb(240, 241, 242); width: 1349px;"
