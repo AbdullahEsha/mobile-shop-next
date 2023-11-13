@@ -39,6 +39,12 @@ const Home = () => {
 
   // use api to get all cuntries and map them to select options, from https://restcountries.com/v3.1/all api
   const [countries, setCountries] = useState([])
+  const [orderDetails, setOrderDetails] = useState({
+    model: '',
+    color: '',
+    storage: '',
+    nationality: '',
+  })
   useEffect(() => {
     const fetchCountries = async () => {
       // use fetch api to get all countries only
@@ -57,7 +63,6 @@ const Home = () => {
     // Update the selected image when a thumbnail is clicked
     setSelectedImage(images[index])
   }
-
   return (
     <main>
       <Swiper
@@ -72,7 +77,7 @@ const Home = () => {
         }}
         pagination={{ clickable: true }}
         onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log('slide change')}
+        // onSlideChange={() => console.log('slide change')}
       >
         <SwiperSlide>
           <Image
@@ -83,14 +88,8 @@ const Home = () => {
             className="h-[300px] w-full"
           />
         </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/slider-background-human.jpg"
-            alt="slider-image"
-            height={300}
-            width={700}
-            className="h-[300px] w-full"
-          />
+        <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-human.jpg')] bg-center">
+          <h1 className="text-white text-4xl font-bold">iPhone 14</h1>
         </SwiperSlide>
         <SwiperSlide>
           <Image
@@ -102,8 +101,8 @@ const Home = () => {
           />
         </SwiperSlide>
       </Swiper>
-      <div className="flex ">
-        <div className="flex-1">
+      <div className="flex gap-5">
+        <div className="flex-1 mt-3">
           {/* Carousel Example Basic integration with react-slick. In-place enlargement for mouse and touch input.
               Side-by-side enlargement supported, please see External Enlarged Image Demo. Responsive and fluid between breakpoints.
               Initial file size optimized via srcset and sizes attributes. */}
@@ -112,54 +111,176 @@ const Home = () => {
             <ReactImageGallery thumbnailPosition={'bottom'} items={images} />
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-5 mt-10">
+        <div className="flex-1 flex flex-col gap-5 mt-5">
           <h4 className="font-semibold text-teal-800 mb-0">Apple iPhones</h4>
           <hr />
-          <h3 className="text-[#333] mb-0">iPhone 14 Pro Max</h3>
+          <h3 className="text-[#333] mb-0 transition ease-in delay-200">
+            {orderDetails.model === 'iphone-14'
+              ? 'iPhone 14'
+              : 'iPhone 14 Pro Max'}
+          </h3>
           <hr />
           <div className="flex items-center gap-2">
             <p className="w-20">Model:</p>
-            <button className="px-5 py-2 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition">
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, model: 'iphone-14' })
+              }
+              className={`px-5 py-2 border-[1px] font-[400] ${
+                orderDetails.model === 'iphone-14'
+                  ? 'border-teal-800 text-teal-800'
+                  : 'border-gray-400'
+              } hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition`}
+            >
               iPhone 14
             </button>
-            <button className="px-5 py-2 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition">
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, model: 'iphone-14-pro-max' })
+              }
+              className={`px-5 py-2 border-[1px] font-[400] ${
+                orderDetails.model === 'iphone-14-pro-max'
+                  ? 'border-teal-800'
+                  : 'border-gray-400'
+              } hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition`}
+            >
               iPhone 14 Pro Max
             </button>
           </div>
           <div className="flex gap-2 items-center">
             <p className="w-20">Color: </p>
-            <button className="h-12 w-12 rounded-full bg-[#301934] flex justify-center items-center">
-              <GiCheckMark size={20} color="#fff" />
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, color: '#301934' })
+              }
+              className="h-12 w-12 rounded-full bg-[#301934] flex justify-center items-center"
+            >
+              <GiCheckMark
+                size={20}
+                color={`${
+                  orderDetails.color === '#301934' ? '#fff' : '#301934'
+                }`}
+                className="transition ease-in delay-200"
+              />
             </button>
-            <button className="h-12 w-12 rounded-full bg-[#215E7C] flex justify-center items-center">
-              <GiCheckMark size={20} color="#fff" />
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, color: '#215E7C' })
+              }
+              className="h-12 w-12 rounded-full bg-[#215E7C] flex justify-center items-center"
+            >
+              <GiCheckMark
+                size={20}
+                color={`${
+                  orderDetails.color === '#215E7C' ? '#fff' : '#215E7C'
+                }`}
+                className="transition ease-in delay-200"
+              />
             </button>
-            <button className="h-12 w-12 rounded-full bg-[#A50011] flex justify-center items-center">
-              <GiCheckMark size={20} color="#fff" />
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, color: '#A50011' })
+              }
+              className="h-12 w-12 rounded-full bg-[#A50011] flex justify-center items-center"
+            >
+              <GiCheckMark
+                size={20}
+                color={`${
+                  orderDetails.color === '#A50011' ? '#fff' : '#A50011'
+                }`}
+                className="transition ease-in delay-200"
+              />
             </button>
-            <button className="h-12 w-12 rounded-full bg-[#F9E5C9] flex justify-center items-center">
-              <GiCheckMark size={20} color="#fff" />
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, color: '#F9E5C9' })
+              }
+              className="h-12 w-12 rounded-full bg-[#F9E5C9] flex justify-center items-center"
+            >
+              <GiCheckMark
+                size={20}
+                color={`${
+                  orderDetails.color === '#F9E5C9' ? '#fff' : '#F9E5C9'
+                }`}
+                className="transition ease-in delay-200"
+              />
             </button>
-            <button className="h-12 w-12 rounded-full bg-[#5C5B57] flex justify-center items-center">
-              <GiCheckMark size={20} color="#fff" />
+            <button
+              onClick={() =>
+                setOrderDetails({ ...orderDetails, color: '#5C5B57' })
+              }
+              className="h-12 w-12 rounded-full bg-[#5C5B57] flex justify-center items-center"
+            >
+              <GiCheckMark
+                size={20}
+                color={`${
+                  orderDetails.color === '#5C5B57' ? '#fff' : '#5C5B57'
+                }`}
+                className="transition ease-in delay-200"
+              />
             </button>
           </div>
           <div className="flex gap-2 items-center">
             <p className="w-20">Storage: </p>
-            <button className="px-5 py-2 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition">
+            <button
+              onClick={() =>
+                setOrderDetails({
+                  ...orderDetails,
+                  storage: '128GB',
+                })
+              }
+              className={`px-5 py-2 border-[1px] font-[400] ${
+                orderDetails.storage === '128GB'
+                  ? 'border-teal-800'
+                  : 'border-gray-400'
+              } hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition`}
+            >
               128GB
             </button>
-            <button className="px-5 py-2 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition">
+            <button
+              onClick={() =>
+                setOrderDetails({
+                  ...orderDetails,
+                  storage: '256GB',
+                })
+              }
+              className={`px-5 py-2 border-[1px] font-[400] ${
+                orderDetails.storage === '256GB'
+                  ? 'border-teal-800'
+                  : 'border-gray-400'
+              } hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition`}
+            >
               256GB
             </button>
-            <button className="px-5 py-2 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition">
+            <button
+              onClick={() =>
+                setOrderDetails({
+                  ...orderDetails,
+                  storage: '512GB',
+                })
+              }
+              className={`px-5 py-2 border-[1px] font-[400] ${
+                orderDetails.storage === '512GB'
+                  ? 'border-teal-800'
+                  : 'border-gray-400'
+              } hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition`}
+            >
               512GB
             </button>
           </div>
           <hr />
           <div className="flex gap-2 items-center">
             <p className="w-20">Nationality:</p>
-            <select className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition">
+            <select
+              onChange={(event) =>
+                setOrderDetails({
+                  ...orderDetails,
+                  nationality: event.target.value,
+                })
+              }
+              value={orderDetails.nationality}
+              className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition"
+            >
               {countries
                 .sort((a, b) => a.name.common.localeCompare(b.name.common))
                 .map((country) => (
