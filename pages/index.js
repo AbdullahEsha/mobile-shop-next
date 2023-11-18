@@ -1,30 +1,48 @@
 import { useEffect, useState } from 'react'
-import { Pagination, Autoplay, A11y } from 'swiper/modules'
-import { EffectCards } from 'swiper/modules'
+import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
 import Image from 'next/image'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { GiCheckMark } from 'react-icons/gi'
-import ReactImageGallery from 'react-image-gallery'
 import ReactImageMagnify from 'react-image-magnify'
-import ReactSlick from 'react-slick'
 
-// import stylesheet if you're not already using CSS @import
-import 'react-image-gallery/styles/css/image-gallery.css'
-
-const images = [
+const products = [
   {
-    original: 'https://picsum.photos/id/1018/1000/600.jpg',
-    thumbnail: 'https://picsum.photos/id/1018/250/150.jpg',
+    _id: 1,
+    name: 'Product 1',
+    price: 100,
+    image: '/images/product-img-1.png',
   },
   {
-    original: 'https://picsum.photos/id/1015/1000/600.jpg',
-    thumbnail: 'https://picsum.photos/id/1015/250/150.jpg',
+    _id: 2,
+    name: 'Product 2',
+    price: 200,
+    image: '/images/product-img-2.png',
   },
   {
-    original: 'https://picsum.photos/id/1019/1000/600.jpg',
-    thumbnail: 'https://picsum.photos/id/1019/250/150.jpg',
+    _id: 3,
+    name: 'Product 3',
+    price: 300,
+    image: '/images/product-img-3.png',
+  },
+  {
+    _id: 4,
+    name: 'Product 4',
+    price: 400,
+    image: '/images/product-img-1.png',
+  },
+  {
+    _id: 5,
+    name: 'Product 5',
+    price: 500,
+    image: '/images/product-img-2.png',
+  },
+  {
+    _id: 6,
+    name: 'Product 6',
+    price: 600,
+    image: '/images/product-img-3.png',
   },
 ]
 
@@ -33,6 +51,12 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
+import 'swiper/css/free-mode'
+import 'swiper/css/thumbs'
+
+// import required modules
+// import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
+import ProductSlider from '@/components/ProductSlider'
 
 const Home = () => {
   SwiperCore.use([Autoplay])
@@ -57,12 +81,6 @@ const Home = () => {
     fetchCountries()
   }, [])
 
-  const [selectedImage, setSelectedImage] = useState(images[0])
-
-  const handleImageClick = (event, { index }) => {
-    // Update the selected image when a thumbnail is clicked
-    setSelectedImage(images[index])
-  }
   return (
     <main>
       <Swiper
@@ -79,37 +97,20 @@ const Home = () => {
         onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}
       >
-        <SwiperSlide>
-          <Image
-            src="/images/slider-background-girl.jpg"
-            alt="slider-image"
-            height={300}
-            width={700}
-            className="h-[300px] w-full"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-human.jpg')] bg-center">
+        <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-girl.jpg')] bg-center bg-cover bg-no-repeat">
           <h1 className="text-white text-4xl font-bold">iPhone 14</h1>
         </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            src="/images/slider-background.jpg"
-            alt="slider-image"
-            height={300}
-            width={700}
-            className="h-[300px] w-full"
-          />
+        <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-human.jpg')] bg-center bg-cover bg-no-repeat">
+          <h1 className="text-white text-4xl font-bold">iPhone 14</h1>
+        </SwiperSlide>
+        <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background.jpg')] bg-center bg-cover bg-no-repeat">
+          <h1 className="text-white text-4xl font-bold">iPhone 14 Pro Max</h1>
         </SwiperSlide>
       </Swiper>
-      <div className="flex gap-5">
-        <div className="flex-1 mt-3">
-          {/* Carousel Example Basic integration with react-slick. In-place enlargement for mouse and touch input.
-              Side-by-side enlargement supported, please see External Enlarged Image Demo. Responsive and fluid between breakpoints.
-              Initial file size optimized via srcset and sizes attributes. */}
-          {/* also use react-image-gallery for slider option to show multipul image */}
-          <div className="max-w-full">
-            <ReactImageGallery thumbnailPosition={'bottom'} items={images} />
-          </div>
+      <div className="flex gap-5 m-auto max-w-[1400px] px-7">
+        <div className="flex-1 w-1/2 mt-3">
+          {/* e-commerce product view using SwiperSlide */}
+          <ProductSlider products={products} />
         </div>
         <div className="flex-1 flex flex-col gap-5 mt-5">
           <h4 className="font-semibold text-teal-800 mb-0">Apple iPhones</h4>
@@ -279,7 +280,7 @@ const Home = () => {
                 })
               }
               value={orderDetails.nationality}
-              className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition"
+              className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition focus:outline-none"
             >
               {countries
                 .sort((a, b) => a.name.common.localeCompare(b.name.common))

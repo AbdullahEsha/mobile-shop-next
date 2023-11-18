@@ -5,10 +5,14 @@ const nextConfig = {
   },
   reactStrictMode: true,
   images: {
-    domains: ['flagcdn.com', 'upload.wikimedia.org', 'restcountries.com'],
+    domains: [
+      'flagcdn.com',
+      'upload.wikimedia.org',
+      'restcountries.com',
+      'picsum.photos',
+      'swiperjs.com',
+    ],
   },
 }
 
 module.exports = nextConfig
-
-//

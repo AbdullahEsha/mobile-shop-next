@@ -47,28 +47,14 @@ h6 {
   margin-bottom: 0.5em;
 }
 
-.react-slick * {
-  min-height: 0;
-  min-width: 0;
+span.swiper-pagination-bullet {
+  transition: 0.2s ease;
 }
 
-.react-slick .slick-prev,
-.react-slick .slick-next {
-  background-color: rgb(187, 184, 184);
-  border-radius: 10px;
+span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+  width: 18px;
+  border-radius: 20px !important;
+  transition: 0.2s ease;
 }
 
-.react-slick .fluid__instructions {
-  margin-top: 30px;
-}
-
-@media (min-width: 480px) {
-  .react-slick .fluid__image-container {
-    margin: 40px;
-  }
-
-  .react-slick .fluid__instructions {
-    margin: 0 20px;
-    padding-top: 20px;
-  }
-}
+/* ============ Product Slider CSS ================= */
