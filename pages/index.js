@@ -98,13 +98,32 @@ const Home = () => {
         // onSlideChange={() => console.log('slide change')}
       >
         <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-girl.jpg')] bg-center bg-cover bg-no-repeat">
-          <h1 className="text-white text-4xl font-bold">iPhone 14</h1>
+          <div className="h-[300px] flex flex-col justify-center items-end mx-40 ">
+            <h1 className="text-4xl font-bold text-gray-600">IPhone 14</h1>
+            <button className="py-3 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out">
+              Order Now <FaArrowRightLong size={16} />
+            </button>
+          </div>
         </SwiperSlide>
         <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-human.jpg')] bg-center bg-cover bg-no-repeat">
-          <h1 className="text-white text-4xl font-bold">iPhone 14</h1>
+          <div className="h-[300px] flex flex-col justify-center items-end mx-40 ">
+            <h1 className="text-4xl font-bold text-gray-600">
+              IPhone 14 Pro Max
+            </h1>
+            <button className="py-3 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out">
+              Order Now <FaArrowRightLong size={16} />
+            </button>
+          </div>
         </SwiperSlide>
         <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background.jpg')] bg-center bg-cover bg-no-repeat">
-          <h1 className="text-white text-4xl font-bold">iPhone 14 Pro Max</h1>
+          <div className="h-[300px] flex flex-col justify-center items-start mx-40">
+            <h1 className="text-4xl font-bold text-gray-600">
+              Buy Your Dreams
+            </h1>
+            <button className="py-3 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out">
+              Order Now <FaArrowRightLong size={16} />
+            </button>
+          </div>
         </SwiperSlide>
       </Swiper>
       <div className="flex gap-5 m-auto max-w-[1400px] px-7">
