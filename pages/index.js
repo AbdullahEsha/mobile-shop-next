@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
-import Image from 'next/image'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { GiCheckMark } from 'react-icons/gi'
-import ReactImageMagnify from 'react-image-magnify'
+import { useRouter } from 'next/navigation'
 
 const products = [
   {
@@ -60,6 +59,7 @@ import ProductSlider from '@/components/ProductSlider'
 
 const Home = () => {
   SwiperCore.use([Autoplay])
+  const router = useRouter()
 
   // use api to get all cuntries and map them to select options, from https://restcountries.com/v3.1/all api
   const [countries, setCountries] = useState([])
@@ -80,6 +80,16 @@ const Home = () => {
     }
     fetchCountries()
   }, [])
+
+  const handleSubmit = () => {
+    // console.log(orderDetails)
+    router.push({
+      pathname: '/user-info',
+      query: { ...orderDetails },
+    })
+  }
+
+  console.log('orderDetails', orderDetails)
 
   return (
     <main>
@@ -311,7 +321,10 @@ const Home = () => {
             </select>
           </div>
           <hr />
-          <button className="py-3 bg-teal-600 hover:bg-teal-500 font-bold text-sm text-white flex items-center gap-2 justify-center w-3/4 rounded-sm">
+          <button
+            onClick={handleSubmit}
+            className="py-3 bg-teal-600 hover:bg-teal-500 font-bold text-sm text-white flex items-center gap-2 justify-center w-3/4 rounded-sm"
+          >
             NEXT <FaArrowRightLong size={16} />
           </button>
         </div>

