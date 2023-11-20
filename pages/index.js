@@ -82,14 +82,20 @@ const Home = () => {
   }, [])
 
   const handleSubmit = () => {
-    // console.log(orderDetails)
-    router.push({
-      pathname: '/user-info',
-      query: { ...orderDetails },
-    })
+    if (
+      orderDetails.color &&
+      orderDetails.model &&
+      orderDetails.storage &&
+      orderDetails.nationality
+    ) {
+      router.push({
+        pathname: '/user-info',
+        query: { ...orderDetails },
+      })
+    } else {
+      alert('Please select all options')
+    }
   }
-
-  console.log('orderDetails', orderDetails)
 
   return (
     <main>
@@ -104,7 +110,7 @@ const Home = () => {
           disableOnInteraction: false,
         }}
         pagination={{ clickable: true }}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSwiper={(swiper) => console.log(swiper)}
         // onSlideChange={() => console.log('slide change')}
       >
         <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-girl.jpg')] bg-center bg-cover bg-no-repeat">
@@ -313,8 +319,8 @@ const Home = () => {
             >
               {countries
                 .sort((a, b) => a.name.common.localeCompare(b.name.common))
-                .map((country) => (
-                  <option key={country.name.common}>
+                .map((country, index) => (
+                  <option key={index} value={country.name.common}>
                     {country.name.common}
                   </option>
                 ))}

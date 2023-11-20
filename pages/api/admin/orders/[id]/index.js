@@ -1,13 +1,25 @@
+import { createRouter } from 'next-connect'
 import Order from '@/models/Order'
-import connectDB from '@/utils/db'
+import { dbConnect, dbDisconnect } from '@/utils/db'
+import { onError } from '@/utils/error'
+import { isAdmin, isAuth } from '@/utils/auth'
 
-const handler = async (req, res) => {
-  await connectDB()
-  //   const { name, age } = req.body
-  const order = new Order(req.body)
-  await order.save()
-  //   console.log('inside api', name, age)
-  res.status(200).json({ done: true })
-}
+const router = createRouter({ onError })
+
+// router.use(isAuth, isAdmin)
+
+router.get(async (req, res) => {
+  await dbConnect()
+  const orders = await Order.find({})
+  await dbDisconnect()
+  res.send(orders)
+})
+
+router.delete(async (req, res) => {
+  await dbConnect()
+  const order = await Order.findByIdAndDelete(req.body.id)
+  await dbDisconnect()
+  res.send(order)
+})
 
 export default handler

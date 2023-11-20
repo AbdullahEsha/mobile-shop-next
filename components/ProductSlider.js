@@ -6,8 +6,6 @@ import 'swiper/swiper-bundle.css'
 import { useState } from 'react'
 import ReactImageMagnify from 'react-image-magnify'
 
-import ReactZoom from 'react-image-zoom'
-
 const ProductSlider = ({ products }) => {
   SwiperCore.use([A11y])
   const [selectedProduct, setSelectedProduct] = useState({
@@ -27,25 +25,23 @@ const ProductSlider = ({ products }) => {
               width: 300,
               height: 300,
             },
-            centered: true,
             largeImage: {
               src: selectedProduct.image,
-              width: 1000,
-              height: 650,
+              width: 900,
+              height: 700,
             },
-            enlargedImageContainerDimensions: {
-              width: '200%',
-              height: '200%',
-            },
+            // enlargedImageContainerDimensions: {
+            //   width: '200%',
+            //   height: '100%',
+            // },
             enlargedImageContainerStyle: {
               zIndex: 9,
             },
-            enlargedImageStyle: {
-              width: '100%',
-              height: '100%',
-            },
-            enlargedImageContainerClassName:
-              'absolute top-0 left-0 r-10 z-50 bg-white',
+            // enlargedImageStyle: {
+            //   width: '100%',
+            //   height: '50%',
+            // },
+            enlargedImageContainerClassName: 'bg-white',
             enlargedImagePosition: 'over',
           }}
         />

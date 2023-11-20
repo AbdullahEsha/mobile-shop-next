@@ -2,28 +2,26 @@ import mongoose from 'mongoose'
 
 const { ObjectId } = mongoose.Schema
 
+nationality
+
 const orderSchema = new mongoose.Schema(
   {
-    products: [
-      {
-        product: { type: ObjectId, ref: 'Product' },
-        count: Number,
-        color: String,
-      },
-    ],
-    paymentIntent: {},
-    orderStatus: {
+    color: {
       type: String,
-      default: 'Not Processed',
-      enum: [
-        'Not Processed',
-        'Processing',
-        'Dispatched',
-        'Cancelled',
-        'Completed',
-      ], // enum means string objects
+      required: true,
     },
-    orderedBy: { type: ObjectId, ref: 'User' },
+    model: {
+      type: String,
+      required: true,
+    },
+    storage: {
+      type: String,
+      required: true,
+    },
+    nationality: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
+    passport: { type: String, required: true },
   },
   { timestamps: true },
 )

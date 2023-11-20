@@ -1,20 +1,18 @@
-import nc from "next-connect";
-import Order from "@/models/Order";
-import db from "@/utils/db";
-import { onError } from "@/utils/error";
-import { isAdmin, isAuth } from "@/utils/auth";
+import { createRouter } from 'next-connect'
+import Order from '@/models/Order'
+import { dbConnect, dbDisconnect } from '@/utils/db'
+import { onError } from '@/utils/error'
+import { isAdmin, isAuth } from '@/utils/auth'
 
-console.log("MONGODB_URI", process.env.MONGODB_URL);
+const router = createRouter({ onError })
 
-const handler = nc({ onError });
+router.use(isAuth, isAdmin)
 
-handler.use(isAuth, isAdmin);
+router.get(async (req, res) => {
+  await dbConnect()
+  const orders = await Order.find({})
+  await dbDisconnect()
+  res.send(orders)
+})
 
-handler.get(async (req, res) => {
-  await db.connect();
-  const orders = await Order.find({}).populate("user", "name");
-  await db.disconnect();
-  res.send(orders);
-});
-
-export default handler;
+export default router.handler()
