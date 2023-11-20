@@ -4,13 +4,6 @@ import { createRouter } from 'next-connect'
 
 const router = createRouter()
 
-router.post(async (req, res) => {
-  await dbConnect()
-  const order = await Order.create(req.body)
-  await dbDisconnect()
-  res.send(order)
-})
-
 router.patch(async (req, res) => {
   await dbConnect()
   const { id } = req.params
