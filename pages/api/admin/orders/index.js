@@ -1,20 +1,20 @@
-import nc from 'next-connect'
-import Order from '@/models/Order'
-import db from '@/utils/db'
-import { onError } from '@/utils/error'
-import { isAdmin, isAuth } from '@/utils/auth'
+import nc from "next-connect";
+import Order from "@/models/Order";
+import db from "@/utils/db";
+import { onError } from "@/utils/error";
+import { isAdmin, isAuth } from "@/utils/auth";
 
-console.log('MONGODB_URI', process.env.MONGODB_URL)
+console.log("MONGODB_URI", process.env.MONGODB_URL);
 
-const handler = nc({ onError })
+const handler = nc({ onError });
 
-handler.use(isAuth, isAdmin)
+handler.use(isAuth, isAdmin);
 
 handler.get(async (req, res) => {
-  await db.connect()
-  const orders = await Order.find({}).populate('user', 'name')
-  await db.disconnect()
-  res.send(orders)
-})
+  await db.connect();
+  const orders = await Order.find({}).populate("user", "name");
+  await db.disconnect();
+  res.send(orders);
+});
 
-export default handler
+export default handler;

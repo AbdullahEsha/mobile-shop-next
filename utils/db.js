@@ -1,35 +1,26 @@
 import mongoose from 'mongoose'
 
-const DATABASE_URL = process.env.MONGODB_URL
+const connection = {}
 
-if (!DATABASE_URL) {
-  throw new Error(
-    'Please define the DATABASE_URL environment variable inside .env.local',
-  )
-}
-
-let cached = global.mongoose
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null }
-}
-
-async function connectDB() {
-  if (cached.conn) {
-    return cached.conn
+const dbConnect = async () => {
+  if (connection.isConnected) {
+    return
   }
 
-  if (!cached.promise) {
-    const opts = {
-      bufferCommands: false,
-    }
+  const db = await mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
 
-    cached.promise = mongoose.connect(DATABASE_URL, opts).then((mongoose) => {
-      return mongoose
-    })
-  }
-  cached.conn = await cached.promise
-  return cached.conn
+  connection.isConnected = db.connections[0].readyState
+  console.log('MONGODB_URI', process.env.MONGODB_URL)
 }
 
-export default connectDB
+const dbDisconnect = async () => {
+  if (connection.isConnected) {
+    await mongoose.disconnect()
+    connection.isConnected = false
+  }
+}
+
+export { dbConnect, dbDisconnect }
