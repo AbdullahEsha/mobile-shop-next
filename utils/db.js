@@ -1,45 +1,32 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-const connection = {}
+const connection = {};
 
-export async function connect() {
-  // if (connection.isConnected) {
-  //   console.log('already conected!')
-  //   return
-  // }
+const dbConnect = async () => {
+  if (connection.isConnected) {
+    return;
+  }
 
-  // if (mongoose.connections.length > 0) {
-  //   connection.isConnected = mongoose.connections[0].readyState
-  //   if (connection.isConnected === 1) {
-  //     console.log('Use previous connection!')
-  //     return
-  //   }
-  //   await mongoose.disconnect()
-  // }
-  const db = await mongoose.connect(process.env.MONGODB_URL)
-  // console.log('New Connection!')
-  // connection.isConnected = db.connections[0].readyState
-  return db;
-}
+  const db = await mongoose.connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
 
-// console.log("mongodbUrl", process.env.MONGODB_URL);
+  connection.isConnected = db.connections[0].readyState;
+  console.log("MONGODB_URI", process.env.MONGODB_URL);
+};
 
-// async function disconnect() {
-//   if (connection.isConnected) {
-//     if (process.env.NODE_ENV == 'production') {
-//       await mongoose.disconnect()
-//       connection.isConnected = false
-//     }
-//   }
-// }
+const dbDisconnect = async () => {
+  if (connection.isConnected) {
+    await mongoose.disconnect();
+    connection.isConnected = false;
+  }
+};
 
-// function convertDocToObj(doc) {
-//   doc._id = doc._id.toString()
-//   doc.createdAt = doc.createdAt.toString()
-//   doc.updatedAt = doc.updatedAt.toString()
-//   return doc
-// }
-// const db = { connect, disconnect, convertDocToObj }
-// const db = { connect, disconnect, convertDocToObj }
+export { dbConnect, dbDisconnect };
 
-// export default db
+// Compare this snippet from pages/api/products/index.js:
+
+// import nc from "next-connect";
+// import Product from "@/models/Product";
+// import db from "@/utils/db";
