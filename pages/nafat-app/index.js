@@ -85,6 +85,7 @@ const NafatApp = () => {
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
         <h1 className="text-4xl font-bold text-gray-600 mt-10">Nafat App</h1>
         {/* make this link as a button */}
+
         <p className="text-gray-600 text-center mt-5 font-bold">
           رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
         </p>
@@ -92,7 +93,7 @@ const NafatApp = () => {
           Please accept the login request from Nafath app
         </p>
         <Link
-          href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
+          href=""
           target="_blank"
           className="py-3 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
         >
