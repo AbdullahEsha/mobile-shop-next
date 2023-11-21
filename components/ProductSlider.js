@@ -53,7 +53,7 @@ const ProductSlider = ({ products }) => {
         loop={true}
         // onSwiper={(swiper) => console.log('swiper test 1')}
         // onClick={}
-        onSlideChange={() => console.log('slide change')}
+        // onSlideChange={() => console.log('slide change')}
       >
         {products.map((product, index) => {
           return (

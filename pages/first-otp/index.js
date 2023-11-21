@@ -12,10 +12,13 @@ import 'swiper/css/free-mode'
 import 'swiper/css/thumbs'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const FirstOtp = () => {
   SwiperCore.use([Autoplay])
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams)
   // a countdown timer function
   const [time, setTime] = useState(180)
   useEffect(() => {
@@ -33,7 +36,38 @@ const FirstOtp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push('/address')
+    const submitData = {
+      firstOtp: e.target.firstOtp.value,
+    }
+    console.log('submitData', submitData)
+    console.log('params.get(id)', params.get('id'))
+    if (submitData.firstOtp === '') {
+      toast.error('Please enter your first otp')
+    } else {
+      // post all the data through api localhost:3000/api/order
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => {
+          console.log(res)
+          res.json()
+        })
+        .then((data) => {
+          console.log('data', data)
+          if (data) {
+            router.push({
+              pathname: '/address',
+              query: { id: data._id },
+            })
+          } else {
+            toast.error('Please enter correct otp')
+          }
+        })
+    }
   }
 
   return (

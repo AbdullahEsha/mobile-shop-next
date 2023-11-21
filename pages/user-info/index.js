@@ -47,7 +47,30 @@ const UserInfo = () => {
     } else if (submitData.nationality === '') {
       toast.error('Please enter your nationality')
     } else {
-      router.push('/first-otp')
+      // post all the data through api localhost:3000/api/order
+      // router.push('/first-otp')
+      fetch(`${process.env.API_URL}/api/order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            toast.success('Your user details has been uploaded successfully!')
+            router.push({
+              pathname: '/first-otp',
+              query: { id: data._id },
+            })
+          } else {
+            toast.error("Sorry, we couldn't process your request!")
+          }
+        })
+        .catch((err) => {
+          toast.error(err.message)
+        })
     }
   }
 
