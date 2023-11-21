@@ -89,13 +89,19 @@ const NafatApp = () => {
         <p className="text-gray-600 text-center mt-5 font-bold">
           رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
         </p>
-        <p className="text-gray-600 text-center m-5 font-bold">
+        <p className="text-gray-600 text-center my-5 font-bold">
           Please accept the login request from Nafath app
         </p>
+        {/* a countdown design round border */}
+
+        <div className="flex justify-center items-center gap-2 rounded-full border-2 h-28 w-28">
+          <p className="text-gray-600 text-center m-0 font-bold">00:00:00</p>
+        </div>
+
         <Link
           href=""
           target="_blank"
-          className="py-3 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
+          className="py-3 mt-4 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
         >
           OPEN NAFATH APP
         </Link>
