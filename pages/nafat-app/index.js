@@ -99,7 +99,7 @@ const NafatApp = () => {
         </div>
 
         <Link
-          href=""
+          href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
           target="_blank"
           className="py-3 mt-4 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
         >
