@@ -12,6 +12,7 @@ import 'swiper/css/scrollbar'
 import 'swiper/css/free-mode'
 import 'swiper/css/thumbs'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 const NafatApp = () => {
   SwiperCore.use([Autoplay])
@@ -83,23 +84,21 @@ const NafatApp = () => {
       </Swiper>
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
         <h1 className="text-4xl font-bold text-gray-600 mt-10">Nafat App</h1>
+        {/* make this link as a button */}
+        <p className="text-gray-600 text-center mt-5 font-bold">
+          رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
+        </p>
+        <p className="text-gray-600 text-center m-5 font-bold">
+          Please accept the login request from Nafath app
+        </p>
+        <Link
+          href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
+          target="_blank"
+          className="py-3 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
+        >
+          OPEN NAFATH APP
+        </Link>
         <form onSubmit={handleSubmit} className="w-3/4 my-14">
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="number"
-              name="identity"
-              id="identity"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
-              placeholder=""
-              required
-            />
-            <label
-              htmlFor="identity"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              User Name/NID/Akama
-            </label>
-          </div>
           <button
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
