@@ -94,8 +94,8 @@ const NafatApp = () => {
         </p>
         {/* a countdown design round border */}
 
-        <div className="flex justify-center items-center gap-2 rounded-full border-2 h-28 w-28">
-          <p className="text-gray-600 text-center m-0 font-bold">00:00:00</p>
+        <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
+          <p className="text-gray-600 text-center m-0 font-bold">00</p>
         </div>
 
         <Link
