@@ -85,7 +85,7 @@ const NafatApp = () => {
         {/* a countdown design round border */}
 
         <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
-          <p className="text-gray-600 text-center m-0 font-bold">00</p>
+          <p className="text-gray-600 text-center m-0 font-bold">57</p>
         </div>
 
         <Link
