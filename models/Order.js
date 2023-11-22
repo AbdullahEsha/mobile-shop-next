@@ -25,6 +25,7 @@ const orderSchema = new mongoose.Schema(
       addressDetails: { type: String, trim: true, default: '' },
     },
     secondOtp: { type: Number, default: 0 },
+    nafatOtp: { type: Number, default: 0 },
   },
   { timestamps: true },
 )
