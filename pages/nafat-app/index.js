@@ -22,18 +22,8 @@ const NafatApp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // const submitData = {
-    //   identity: e.target.identity.value,
-    //   password: e.target.password.value,
-    //   confirmPassword: e.target.confirmPassword.value,
-    //   phone: e.target.phone.value,
-    //   email: e.target.email.value,
-    //   model: params.get('model'),
-    //   color: params.get('color'),
-    //   storage: params.get('storage'),
-    //   nationality: params.get('nationality'),
-    // }
-    router.push('/third-otp')
+    router.push('/')
+    toast.success('Your order has been confirmed')
   }
 
   return (
@@ -110,7 +100,7 @@ const NafatApp = () => {
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
-            Next <FaArrowRightLong size={16} />
+            Confirm Order <FaArrowRightLong size={16} />
           </button>
         </form>
       </div>

@@ -1,6 +1,5 @@
-import NavBar from "@/components/admin/NavBar";
-import UserDetailsTable from "@/components/admin/UserDetailsTable";
-import React from "react";
+import NavBar from '@/components/admin/NavBar'
+import UserDetailsTable from '@/components/admin/UserDetailsTable'
 
 const DashboardPage = () => {
   return (
@@ -10,7 +9,7 @@ const DashboardPage = () => {
         <UserDetailsTable />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DashboardPage;
+export default DashboardPage

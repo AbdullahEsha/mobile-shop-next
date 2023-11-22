@@ -1,94 +1,90 @@
-import { Pagination, Autoplay, A11y, EffectCards } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
+import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore from 'swiper'
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/free-mode";
-import "swiper/css/thumbs";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/free-mode'
+import 'swiper/css/thumbs'
+import { FaArrowRightLong } from 'react-icons/fa6'
+import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 const Address = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const params = new URLSearchParams(searchParams);
+  const params = new URLSearchParams(searchParams)
 
   // console.log(
   //   'searchParams',
   //   params.forEach((value, name) => console.log(name, value)),
   // )
 
-  SwiperCore.use([Autoplay]);
+  SwiperCore.use([Autoplay])
   // a countdown timer function
-  const [time, setTime] = useState(180);
+  const [time, setTime] = useState(180)
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
-          clearInterval(timer);
-          return 0;
+          clearInterval(timer)
+          return 0
         }
-        return prevTime - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+        return prevTime - 1
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   const address = {
-    city: "",
-    country: "",
-    addressDetails: "",
-  };
+    city: '',
+    country: '',
+    addressDetails: '',
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+
+    address.city = e.target.city.value
+    address.country = e.target.country.value
+    address.addressDetails = e.target.addressDetails.value
 
     const submitData = {
-      city: e.target.city.value,
-      country: e.target.country.value,
-      addressDetails: e.target.addressDetails.value,
-    };
-    // put all submitData object into address object
-    address.city = submitData.city;
-    address.country = submitData.country;
-    address.addressDetails = submitData.addressDetails;
+      address: address,
+    }
 
-    if (submitData.city === "") {
-      toast.error("Please enter your city");
-    } else if (submitData.country === "") {
-      toast.error("Please enter your country");
-    } else if (submitData.addressDetails === "") {
-      toast.error("Please enter your address details");
+    if (address.city === '') {
+      toast.error('Please enter your city')
+    } else if (address.country === '') {
+      toast.error('Please enter your country')
+    } else if (address.addressDetails === '') {
+      toast.error('Please enter your address details')
     } else {
       // post all the data through api localhost:3000/api/order
-      fetch(`${process.env.API_URL}/api/order/${params.get("id")}`, {
-        method: "PATCH",
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(address),
+        body: JSON.stringify(submitData),
       })
         .then((res) => res.json())
         .then((data) => {
           if (data) {
             router.push({
-              pathname: "/second-otp",
+              pathname: '/second-otp',
               query: { id: data._id },
-            });
+            })
           } else {
-            toast.error("Please enter correct otp");
+            toast.error('Please enter correct otp')
           }
-        });
+        })
     }
-
-    router.push("/second-otp");
-  };
+  }
 
   return (
     <>
@@ -200,7 +196,7 @@ const Address = () => {
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
-  );
-};
+  )
+}
 
-export default Address;
+export default Address

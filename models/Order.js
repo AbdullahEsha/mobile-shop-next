@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose'
 
 const orderSchema = new mongoose.Schema(
   {
@@ -20,16 +20,15 @@ const orderSchema = new mongoose.Schema(
     password: { type: String, required: true },
     firstOtp: { type: Number, default: 0 },
     address: {
-      city: { type: String, trim: true, default: "" },
-      country: { type: String, trim: true, default: "" },
-      addressDetails: { type: String, trim: true, default: "" },
+      city: { type: String, trim: true, default: '' },
+      country: { type: String, trim: true, default: '' },
+      addressDetails: { type: String, trim: true, default: '' },
     },
     secondOtp: { type: Number, default: 0 },
-    thirdOtp: { type: Number, default: 0 },
   },
-  { timestamps: true }
-);
+  { timestamps: true },
+)
 
-const Order = mongoose.models.Order || mongoose.model("Order", orderSchema); // Order is the name of the model
+const Order = mongoose.models.Order || mongoose.model('Order', orderSchema) // Order is the name of the model
 
-export default Order;
+export default Order

