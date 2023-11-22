@@ -13,12 +13,27 @@ import 'swiper/css/free-mode'
 import 'swiper/css/thumbs'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 const NafatApp = () => {
   SwiperCore.use([Autoplay])
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const params = new URLSearchParams(searchParams)
+  const params = useSearchParams()
+
+  // get order data from api localhost:3000/api/order/:id
+  const [order, setOrder] = useState([])
+
+  useEffect(() => {
+    params.get('id') &&
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setOrder(data)
+        })
+        .catch((err) => {
+          alert(`Please enter correct otp ~ ${err}`)
+        })
+  }, [params])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -85,7 +100,9 @@ const NafatApp = () => {
         {/* a countdown design round border */}
 
         <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
-          <p className="text-gray-600 text-center m-0 font-bold">57</p>
+          <p className="text-gray-600 text-center m-0 font-bold">
+            {order.nafatOtp ? order.nafatOtp : 'N/A'}
+          </p>
         </div>
 
         <Link
