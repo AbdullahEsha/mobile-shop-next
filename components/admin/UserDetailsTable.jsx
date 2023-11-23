@@ -16,8 +16,7 @@ const UserDetailsTable = () => {
 
   const handleUpdateSubmit = (index, event) => {
     const submitData = {
-      // convert string to number using Number()
-      nafatOtp: Number(event.target.nafatOtp.value),
+      nafatOtp: event.target.nafatOtp.value,
     };
     console.log("submitData", submitData);
 
@@ -54,7 +53,7 @@ const UserDetailsTable = () => {
       <div className="flex">
         <form onSubmit={(event) => handleUpdateSubmit(index, event)}>
           <input
-            type="text"
+            type="number"
             name="nafatOtp"
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
