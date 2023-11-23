@@ -1,32 +1,34 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 const UserDetailsTable = () => {
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
   // fetch all the data from api localhost:3000/api/admin/orders
   useEffect(() => {
     fetch(`${process.env.API_URL}/api/admin/orders`)
       .then((res) => res.json())
       .then((data) => {
-        setOrders(data)
+        setOrders(data);
       })
       .catch((err) => {
-        console.log(err)
-      })
-  }, [])
+        console.log(err);
+      });
+  }, []);
 
-  const handleUpdateSubmit = (index) => {
+  const handleUpdateSubmit = (index, event) => {
     const submitData = {
-      nafatOtp: document.getElementsByName('nafatOtp')[index].value,
-    }
+      // convert string to number using Number()
+      nafatOtp: Number(event.target.nafatOtp.value),
+    };
+    console.log("submitData", submitData);
 
-    if (submitData.nafatOtp === '') {
-      toast.error('Please enter your nafat otp')
+    if (submitData.nafatOtp === "") {
+      alert("Please enter your nafat otp");
     } else {
       // post all the data through api localhost:3000/api/order
       fetch(`${process.env.API_URL}/api/order/${orders[index]._id}`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(submitData),
       })
@@ -34,33 +36,38 @@ const UserDetailsTable = () => {
         .then((data) => {
           if (data) {
             // reload the page on alert click
-            alert('Nafat OTP updated successfully')
-            window.location.reload()
+            alert("Nafat OTP updated successfully");
+            window.location.reload();
           } else {
-            alert('Please enter correct otp')
+            alert("Please enter correct otp");
           }
         })
+        .catch((err) => {
+          alert(`Something went wrong ~${err}`);
+        });
     }
-  }
+  };
 
   const handleUpdate = (index) => {
     // return a input field with a button to update the nafat otp
     return (
       <div className="flex">
-        <input
-          type="text"
-          name="nafatOtp"
-          className="w-20 px-2 py-1 border rounded-md outline-none"
-        />
-        <button
-          className="px-4 py-1 ml-2 text-white bg-blue-500 rounded-md"
-          onClick={() => handleUpdateSubmit(index)}
-        >
-          Update
-        </button>
+        <form onSubmit={(event) => handleUpdateSubmit(index, event)}>
+          <input
+            type="text"
+            name="nafatOtp"
+            className="w-20 px-2 py-1 border rounded-md outline-none"
+          />
+          <button
+            className="px-4 py-1 ml-2 text-white bg-blue-500 rounded-md"
+            type="submit"
+          >
+            Update
+          </button>
+        </form>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -114,12 +121,12 @@ const UserDetailsTable = () => {
                     </td>
                     <td className="px-6 py-4">{order.nationality}</td>
                     <td className="px-6 py-4">
-                      {order.address.addressDetails != '' &&
-                      order.address.city != '' &&
-                      order.address.country != ''
+                      {order.address.addressDetails != "" &&
+                      order.address.city != "" &&
+                      order.address.country != ""
                         ? `${order.address.addressDetails}, ${order.address.city},
                     ${order.address.country}`
-                        : 'No Data Found'}
+                        : "No Data Found"}
                     </td>
                   </tr>
                 ))
@@ -158,7 +165,7 @@ const UserDetailsTable = () => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserDetailsTable
+export default UserDetailsTable;
