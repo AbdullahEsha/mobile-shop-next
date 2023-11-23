@@ -10,7 +10,13 @@ const NavBar = () => {
           href="https://flowbite.com/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <Image src="/iphone-logo.png" width={100} height={60} alt="Logo" />
+          <Image
+            src="/iphone-logo.png"
+            width={100}
+            height={60}
+            alt="Logo"
+            priority={true}
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Digitoakart
           </span>
@@ -33,9 +39,9 @@ const NavBar = () => {
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M1 1h15M1 7h15M1 13h15"
             />
           </svg>
