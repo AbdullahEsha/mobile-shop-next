@@ -69,6 +69,7 @@ const Home = () => {
     color: '',
     storage: '',
     nationality: '',
+    dob: '',
   })
   useEffect(() => {
     const fetchCountries = async () => {
@@ -87,7 +88,8 @@ const Home = () => {
       orderDetails.color &&
       orderDetails.model &&
       orderDetails.storage &&
-      orderDetails.nationality
+      orderDetails.nationality &&
+      orderDetails.dob
     ) {
       router.push({
         pathname: '/user-info',
@@ -305,7 +307,21 @@ const Home = () => {
               512GB
             </button>
           </div>
-          <hr />
+          <div className="flex gap-2 items-center">
+            {/* date of birth */}
+            <p className="w-20">DOB:</p>
+            <input
+              type="date"
+              onChange={(event) =>
+                setOrderDetails({
+                  ...orderDetails,
+                  dob: event.target.value,
+                })
+              }
+              value={orderDetails.dob}
+              className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition focus:outline-none"
+            />
+          </div>
           <div className="flex gap-2 items-center">
             <p className="w-20">Nationality:</p>
             <select

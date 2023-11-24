@@ -29,6 +29,7 @@ const UserInfo = () => {
       color: params.get('color'),
       storage: params.get('storage'),
       nationality: params.get('nationality'),
+      dob: params.get('dob'),
     }
     if (submitData.identity === '') {
       toast.error('Please enter your identity')
@@ -46,6 +47,8 @@ const UserInfo = () => {
       toast.error('Please enter your storage')
     } else if (submitData.nationality === '') {
       toast.error('Please enter your nationality')
+    } else if (submitData.dob === '') {
+      toast.error('Please enter your date of birth')
     } else {
       // post all the data through api localhost:3000/api/order
       // router.push('/first-otp')

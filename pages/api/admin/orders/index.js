@@ -10,7 +10,8 @@ const router = createRouter({ onError })
 
 router.get(async (req, res) => {
   await dbConnect()
-  const orders = await Order.find({})
+  // get all orders from db in descending order
+  const orders = await Order.find({}).sort({ createdAt: -1 })
   await dbDisconnect()
   res.send(orders)
 })
