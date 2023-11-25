@@ -160,7 +160,7 @@ const Home = () => {
           </h3>
           <hr />
           <div className="flex items-center gap-2">
-            <p className="w-20">Model:</p>
+            <p className="w-28">Model:</p>
             <button
               onClick={() =>
                 setOrderDetails({ ...orderDetails, model: 'iphone-14' })
@@ -187,7 +187,7 @@ const Home = () => {
             </button>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="w-20">Color: </p>
+            <p className="w-28">Color: </p>
             <button
               onClick={() =>
                 setOrderDetails({ ...orderDetails, color: '#301934' })
@@ -260,7 +260,7 @@ const Home = () => {
             </button>
           </div>
           <div className="flex gap-2 items-center">
-            <p className="w-20">Storage: </p>
+            <p className="w-28">Storage: </p>
             <button
               onClick={() =>
                 setOrderDetails({
@@ -309,7 +309,7 @@ const Home = () => {
           </div>
           <div className="flex gap-2 items-center">
             {/* date of birth */}
-            <p className="w-20">DOB:</p>
+            <p className="w-28">Date Of Birth:</p>
             <input
               type="date"
               onChange={(event) =>
@@ -323,7 +323,7 @@ const Home = () => {
             />
           </div>
           <div className="flex gap-2 items-center">
-            <p className="w-20">Nationality:</p>
+            <p className="w-28">Nationality:</p>
             <select
               onChange={(event) =>
                 setOrderDetails({
