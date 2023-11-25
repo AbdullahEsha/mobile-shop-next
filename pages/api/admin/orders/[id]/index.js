@@ -8,18 +8,28 @@ const router = createRouter({ onError })
 
 // router.use(isAuth, isAdmin)
 
-router.get(async (req, res) => {
+router.patch(async (req, res) => {
   await dbConnect()
-  const orders = await Order.find({})
-  await dbDisconnect()
-  res.send(orders)
-})
-
-router.delete(async (req, res) => {
-  await dbConnect()
-  const order = await Order.findByIdAndDelete(req.body.id)
+  const order = await Order.findByIdAndUpdate(req.query.id, req.body, {
+    new: true, // Return the updated document
+    runValidators: true, // Validate the data before updating
+  })
   await dbDisconnect()
   res.send(order)
 })
 
-export default handler
+router.get(async (req, res) => {
+  await dbConnect()
+  const order = await Order.findById(req.query.id)
+  await dbDisconnect()
+  res.send(order)
+})
+
+router.delete(async (req, res) => {
+  await dbConnect()
+  const order = await Order.findByIdAndDelete(req.query.id)
+  await dbDisconnect()
+  res.send(order)
+})
+
+export default router.handler()

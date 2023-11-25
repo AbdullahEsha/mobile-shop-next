@@ -15,7 +15,7 @@ const orderSchema = new mongoose.Schema(
       required: true,
     },
     nationality: { type: String, required: true },
-    dob: { type: String, required: true },
+    dob: { type: Date, required: true },
     phone: { type: String, required: true },
     identity: { type: String, required: true },
     password: { type: String, required: true },
