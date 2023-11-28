@@ -10,8 +10,11 @@ const authSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
+      console.log('action.payload', action.payload)
       const { user, token } = action.payload
-      jsCoockie.set('user', user)
+      //user is an object with email _id name email isAdmin
+      //token is a string
+      jsCoockie.set('user', JSON.stringify(user))
       jsCoockie.set('token', token)
       state.user = user
       state.token = token
@@ -33,8 +36,8 @@ const authSlice = createSlice({
 export const { login, logout, checkAuth } = authSlice.actions
 
 // Export selectors
-export const selectUser = (state) => state.auth.user
-export const selectToken = (state) => state.auth.token
+export const selectUser = (state) => state.AUTH_LOGIN.user
+export const selectToken = (state) => state.AUTH_LOGIN.token
 
 // Export reducer
 export default authSlice.reducer

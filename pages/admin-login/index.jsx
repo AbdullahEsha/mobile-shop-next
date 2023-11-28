@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
+  const router = useRouter()
 
   const login = async (submitData) => {
     console.log('submitData', submitData)
@@ -17,25 +19,26 @@ const Login = () => {
     const data = await response.json()
     if (response.ok) {
       toast.success('Login successfully')
-      // dispatch({
-      //   type: 'AUTH_LOGIN',
-      //   payload: {
-      //     user: data.user,
-      //     token: data.token,
-      //   },
-      // })
+      dispatch({
+        type: 'AUTH_LOGIN',
+        payload: {
+          user: data.user,
+          token: data.token,
+        },
+      })
+      router.push('/admin-dashboard')
     } else {
       toast.error(data.message)
     }
   }
 
   const handleSubmit = (event) => {
-    e.preventDefault()
+    event.preventDefault()
     const submitData = {
       email: event.target.email.value,
       password: event.target.password.value,
     }
-    console.log('submitData', submitData)
+    // console.log('submitData', submitData)
     login(submitData)
   }
 
