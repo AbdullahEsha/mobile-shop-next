@@ -20,10 +20,10 @@ const Login = () => {
     if (response.ok) {
       toast.success('Login successfully')
       dispatch({
-        type: 'AUTH_LOGIN',
+        type: 'AUTH_LOGIN/login',
         payload: {
-          user: data.user,
           token: data.token,
+          user: data.user,
         },
       })
       router.push('/admin-dashboard')

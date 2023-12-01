@@ -3,10 +3,20 @@ import UserDetailsTable from '@/components/admin/UserDetailsTable'
 import { useSelector } from 'react-redux'
 
 const DashboardPage = () => {
-  const data = useSelector((state) => state.AUTH_LOGIN)
+  // const user = useSelector((state) => state.AUTH_LOGIN.user)
 
-  if (data) {
-    console.log('user', data)
+  //  user is a string using JSON.parse(user) to convert it into an object.
+
+  const user = useSelector((state) => JSON.parse(state.AUTH_LOGIN.user))
+
+  console.log('user', user)
+
+  if (!user || !user.isAdmin) {
+    return (
+      <div>
+        <h1>Access Denied</h1>
+      </div>
+    )
   }
 
   return (

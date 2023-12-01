@@ -5,39 +5,39 @@ import jsCoockie from 'js-cookie'
 const authSlice = createSlice({
   name: 'AUTH_LOGIN',
   initialState: {
-    user: jsCoockie.get('user') || null,
-    token: jsCoockie.get('token') || null,
+    token: jsCoockie.get('token') || '',
+    user: jsCoockie.get('user') || {},
   },
   reducers: {
     login: (state, action) => {
-      console.log('action.payload', action.payload)
-      const { user, token } = action.payload
-      //user is an object with email _id name email isAdmin
-      //token is a string
-      jsCoockie.set('user', JSON.stringify(user))
-      jsCoockie.set('token', token)
-      state.user = user
-      state.token = token
+      jsCoockie.set('token', action.payload.token)
+      jsCoockie.set('user', JSON.stringify(action.payload.user))
+      state.token = action.payload.token
+      state.user = action.payload.user
     },
     logout: (state) => {
-      jsCoockie.remove('user')
       jsCoockie.remove('token')
-      state.user = null
-      state.token = null
+      jsCoockie.remove('user')
+      state.token = ''
+      state.user = {}
     },
     checkAuth: (state) => {
-      state.user = jsCoockie.get('user') || null
-      state.token = jsCoockie.get('token') || null
+      const token = jsCoockie.get('token')
+      const user = jsCoockie.get('user')
+      if (token && user) {
+        state.token = token
+        state.user = JSON.parse(user)
+      } else {
+        state.token = ''
+        state.user = {}
+      }
     },
   },
 })
 
-// Export actions
 export const { login, logout, checkAuth } = authSlice.actions
 
-// Export selectors
-export const selectUser = (state) => state.AUTH_LOGIN.user
 export const selectToken = (state) => state.AUTH_LOGIN.token
+export const selectUser = (state) => state.AUTH_LOGIN.user
 
-// Export reducer
 export default authSlice.reducer
