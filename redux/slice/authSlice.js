@@ -13,13 +13,13 @@ const authSlice = createSlice({
       console.log(jsCoockie.get('token'))
       jsCoockie.set('token', action.payload.token, {
         expires: 24 * 60 * 60,
-        // httpOnly: true,
-        secure: true,
+        httpOnly: process.NODE_ENV === 'development' ? false : true,
+        secure: process.NODE_ENV === 'development' ? false : true,
       })
       jsCoockie.set('user', JSON.stringify(action.payload.user), {
         expires: 24 * 60 * 60,
-        // httpOnly: true,
-        secure: true,
+        httpOnly: process.NEXT_NODE_ENV === 'development' ? false : true,
+        secure: process.NEXT_NODE_ENV === 'development' ? false : true,
       })
       state.token = action.payload.token
       state.user = action.payload.user
