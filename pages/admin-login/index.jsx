@@ -1,17 +1,53 @@
-import Image from "next/image";
+import Image from 'next/image'
+import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
 
-export default function Login() {
+const Login = () => {
+  const dispatch = useDispatch()
+  const router = useRouter()
+
+  const login = async (submitData) => {
+    console.log('submitData', submitData)
+    const response = await fetch(`${process.env.API_URL}/api/admin/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(submitData),
+    })
+    const data = await response.json()
+    if (response.ok) {
+      toast.success('Login successfully')
+      dispatch({
+        type: 'AUTH_LOGIN/login',
+        payload: {
+          token: data.token,
+          user: JSON.stringify(data.user),
+        },
+      })
+      router.push('/admin-dashboard')
+    } else {
+      toast.error(data.message)
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    const submitData = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    }
+    // console.log('submitData', submitData)
+    login(submitData)
+  }
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          {/* <img
-            className="mx-auto h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          /> */}
           <Image
-            src={"/iphone-logo.png"}
+            src={'/iphone-logo.png'}
             alt="login-logo"
             width={200}
             height={200}
@@ -24,7 +60,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -39,7 +75,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -60,7 +96,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -77,5 +113,7 @@ export default function Login() {
         </div>
       </div>
     </>
-  );
+  )
 }
+
+export default Login

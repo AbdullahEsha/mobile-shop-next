@@ -28,19 +28,19 @@ const ProductSlider = ({ products }) => {
             largeImage: {
               src: selectedProduct.image,
               width: 900,
-              height: 700,
+              height: 550,
             },
-            // enlargedImageContainerDimensions: {
-            //   width: '200%',
-            //   height: '100%',
-            // },
+            enlargedImageContainerDimensions: {
+              width: '200%',
+              height: '100%',
+            },
             enlargedImageContainerStyle: {
               zIndex: 9,
             },
-            // enlargedImageStyle: {
-            //   width: '100%',
-            //   height: '50%',
-            // },
+            enlargedImageStyle: {
+              width: '100%',
+              height: '50%',
+            },
             enlargedImageContainerClassName: 'bg-white',
             enlargedImagePosition: 'over',
           }}

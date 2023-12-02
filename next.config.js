@@ -4,6 +4,7 @@ const nextConfig = {
     MONGODB_URL: process.env.MONGODB_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     API_URL: process.env.API_URL,
+    NEXT_NODE_ENV: process.env.NEXT_NODE_ENV,
   },
   reactStrictMode: true,
   images: {
@@ -25,3 +26,11 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+// MONGODB_URL
+// PORT
+// API_URL
+// JWT_SECRET
+// JWT_EXPIRES_IN
+// JWT_COOKIE_EXPIRES_IN
+// NODE_ENV
