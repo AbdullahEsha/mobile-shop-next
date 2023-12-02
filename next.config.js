@@ -4,7 +4,7 @@ const nextConfig = {
     MONGODB_URL: process.env.MONGODB_URL,
     JWT_SECRET: process.env.JWT_SECRET,
     API_URL: process.env.API_URL,
-    NEXT_NODE_ENV: process.env.NEXT_NODE_ENV,
+    NEXT_ENV: process.env.NEXT_ENV,
   },
   reactStrictMode: true,
   images: {
