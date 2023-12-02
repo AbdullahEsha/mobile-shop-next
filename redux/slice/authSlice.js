@@ -10,8 +10,17 @@ const authSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      jsCoockie.set('token', action.payload.token)
-      jsCoockie.set('user', JSON.stringify(action.payload.user))
+      console.log(jsCoockie.get('token'))
+      jsCoockie.set('token', action.payload.token, {
+        expires: 24 * 60 * 60,
+        // httpOnly: true,
+        secure: true,
+      })
+      jsCoockie.set('user', JSON.stringify(action.payload.user), {
+        expires: 24 * 60 * 60,
+        // httpOnly: true,
+        secure: true,
+      })
       state.token = action.payload.token
       state.user = action.payload.user
     },

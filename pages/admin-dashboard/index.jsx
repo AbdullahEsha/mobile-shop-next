@@ -1,23 +1,26 @@
 import NavBar from '@/components/admin/NavBar'
 import UserDetailsTable from '@/components/admin/UserDetailsTable'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 const DashboardPage = () => {
+  const router = useRouter()
   // const user = useSelector((state) => state.AUTH_LOGIN.user)
 
-  //  user is a string using JSON.parse(user) to convert it into an object.
+  const userData = useSelector((state) => state.AUTH_LOGIN)
 
-  const user = useSelector((state) => JSON.parse(state.AUTH_LOGIN.user))
+  // console.log('userData', userData.user)
+  // console.log('token', userData.token)
 
-  console.log('user', user)
-
-  if (!user || !user.isAdmin) {
-    return (
-      <div>
-        <h1>Access Denied</h1>
-      </div>
-    )
-  }
+  // protected route
+  useEffect(() => {
+    if (!userData.token) {
+      router.push('/admin-login')
+      toast.error('Please login first')
+    }
+  }, [userData.token, router])
 
   return (
     <div>

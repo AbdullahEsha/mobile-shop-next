@@ -23,7 +23,7 @@ const Login = () => {
         type: 'AUTH_LOGIN/login',
         payload: {
           token: data.token,
-          user: data.user,
+          user: JSON.stringify(data.user),
         },
       })
       router.push('/admin-dashboard')
