@@ -1,7 +1,7 @@
-import db from './db'
+import { dbDisconnect } from './db'
 
 const onError = async (err, req, res, next) => {
-  await db.disconnect()
+  await dbDisconnect()
   res.status(500).send({ message: err.toString() })
 }
 
