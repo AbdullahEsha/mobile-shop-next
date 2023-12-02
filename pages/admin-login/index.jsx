@@ -7,10 +7,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  console.log('process.NEXT_ENV', process.env.NEXT_ENV)
-
   const login = async (submitData) => {
-    console.log('submitData', submitData)
     const response = await fetch(`${process.env.API_URL}/api/admin/login`, {
       method: 'POST',
       headers: {
@@ -40,7 +37,6 @@ const Login = () => {
       email: event.target.email.value,
       password: event.target.password.value,
     }
-    // console.log('submitData', submitData)
     login(submitData)
   }
 
