@@ -6,7 +6,7 @@ import { isAdmin, isAuth } from '@/utils/auth'
 
 const router = createRouter({ onError })
 
-// router.use(isAuth, isAdmin)
+router.use(isAuth, isAdmin)
 
 router.get(async (req, res) => {
   await dbConnect()

@@ -1,8 +1,9 @@
 import Order from '@/models/Order'
 import { dbConnect, dbDisconnect } from '@/utils/db'
 import { createRouter } from 'next-connect'
+import { onError } from '@/utils/error'
 
-const router = createRouter()
+const router = createRouter({ onError })
 
 router.post(async (req, res) => {
   await dbConnect()

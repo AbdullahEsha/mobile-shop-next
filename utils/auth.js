@@ -2,9 +2,17 @@ import jwt from 'jsonwebtoken'
 
 const signToken = (user) => {
   return jwt.sign(
-    { email: user.email, password: user.password },
+    {
+      _id: user._id,
+      email: user.email,
+      password: user.password,
+      isAdmin: user.isAdmin,
+    },
     process.env.JWT_SECRET,
-    { expiresIn: '30d' },
+    {
+      expiresIn: '30d',
+      // httpOnly: process.env.NEXT_ENV === 'production' ? true : false,
+    },
   )
 }
 
@@ -27,6 +35,7 @@ const isAuth = async (req, res, next) => {
 }
 
 const isAdmin = async (req, res, next) => {
+  // req.user gets decoded in isAuth middleware and creates on signToken
   if (req.user.isAdmin) {
     next()
   } else {

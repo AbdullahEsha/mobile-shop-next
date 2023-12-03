@@ -7,14 +7,8 @@ import toast from 'react-hot-toast'
 
 const DashboardPage = () => {
   const router = useRouter()
-  // const user = useSelector((state) => state.AUTH_LOGIN.user)
-
   const userData = useSelector((state) => state.AUTH_LOGIN)
 
-  // console.log('userData', userData.user)
-  // console.log('token', userData.token)
-
-  // protected route
   useEffect(() => {
     if (!userData.token) {
       router.push('/admin-login')
@@ -26,7 +20,7 @@ const DashboardPage = () => {
     <div>
       <NavBar />
       <div className="container mx-auto mt-8">
-        <UserDetailsTable />
+        <UserDetailsTable token={userData.token} />
       </div>
     </div>
   )
