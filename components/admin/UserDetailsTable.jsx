@@ -38,7 +38,7 @@ const UserDetailsTable = ({ token }) => {
     }, 80000)
 
     return () => clearInterval(interval)
-  }, [token])
+  }, [token, router])
 
   const handleUpdateSubmit = (index, event) => {
     const submitData = {
