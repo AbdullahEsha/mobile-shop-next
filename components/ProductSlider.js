@@ -1,77 +1,81 @@
 import Image from 'next/image'
-import { A11y, EffectCards } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore from 'swiper'
 import 'swiper/swiper-bundle.css'
 import { useState } from 'react'
-import ReactImageMagnify from 'react-image-magnify'
+import ImageGallery from 'react-image-gallery'
+import 'react-image-gallery/styles/css/image-gallery.css'
 
-const ProductSlider = ({ products }) => {
-  SwiperCore.use([A11y])
-  const [selectedProduct, setSelectedProduct] = useState({
-    image: products[0].image,
-    name: products[0].name,
-  })
+const products = [
+  {
+    original: '/images/product-img-1.png',
+    thumbnail: '/images/product-img-1.png',
+    original: '/images/product-img-1.png',
+  },
+  {
+    original: '/images/product-img-2.png',
+    thumbnail: '/images/product-img-2.png',
+    original: '/images/product-img-2.png',
+  },
+  {
+    original: '/images/product-img-3.png',
+    thumbnail: '/images/product-img-3.png',
+    original: '/images/product-img-3.png',
+  },
+  {
+    original: '/images/product-img-1.png',
+    thumbnail: '/images/product-img-1.png',
+    original: '/images/product-img-1.png',
+  },
+  {
+    original: '/images/product-img-2.png',
+    thumbnail: '/images/product-img-2.png',
+    original: '/images/product-img-2.png',
+  },
+  {
+    original: '/images/product-img-3.png',
+    thumbnail: '/images/product-img-3.png',
+    original: '/images/product-img-3.png',
+  },
+]
+
+const ProductSlider = () => {
+  const [transformOrigin, setTransformOrigin] = useState('37.663% 9.07859%')
+
+  const handleMouseMove = (e) => {
+    const boundingBox = e.currentTarget.getBoundingClientRect()
+    const x = ((e.clientX - boundingBox.left) / boundingBox.width) * 100
+    const y = ((e.clientY - boundingBox.top) / boundingBox.height) * 100
+    setTransformOrigin(`${x}% ${y}%`)
+  }
 
   return (
     <>
-      <div className="w-full h-auto mb-10 ">
-        <ReactImageMagnify
-          {...{
-            smallImage: {
-              alt: selectedProduct.name,
-              isFluidWidth: true,
-              src: selectedProduct.image,
-              width: 300,
-              height: 300,
-            },
-            largeImage: {
-              src: selectedProduct.image,
-              width: 900,
-              height: 550,
-            },
-            enlargedImageContainerDimensions: {
-              width: '200%',
-              height: '100%',
-            },
-            enlargedImageContainerStyle: {
-              zIndex: 9,
-            },
-            enlargedImageStyle: {
-              width: '100%',
-              height: '50%',
-            },
-            enlargedImageContainerClassName: 'bg-white',
-            enlargedImagePosition: 'over',
-          }}
+      <div className="w-full h-auto mb-10">
+        <ImageGallery
+          thumbnailPosition="bottom"
+          items={products}
+          showFullscreenButton={false}
+          showPlayButton={false}
+          renderItem={(item) => (
+            <div
+              style={{
+                position: 'relative',
+                transition: 'transform 0.5s ease-out 0s',
+                transformOrigin: transformOrigin,
+              }}
+              className="hoverImage h-[30rem] sm:h-[60rem] lg:h-[45rem] xl:h-[55rem] 2xl:h-[60rem] hover:scale-[2]"
+              onMouseMove={handleMouseMove}
+            >
+              <Image
+                alt="iphone image"
+                src={item.original}
+                layout="fill"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 100vw, (max-width: 1024px) 100vw, (max-width: 1280px) 100vw, (max-width: 1536px) 100vw, 100vw"
+                className="h-auto w-full object-cover"
+              />
+            </div>
+          )}
         />
       </div>
-      <Swiper
-        modules={[A11y, EffectCards]}
-        spaceBetween={5}
-        slidesPerView={4}
-        loop={true}
-        // onSwiper={(swiper) => console.log('swiper test 1')}
-        // onClick={}
-        // onSlideChange={() => console.log('slide change')}
-      >
-        {products.map((product, index) => {
-          return (
-            <div key={index}>
-              <SwiperSlide>
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  height={100}
-                  width={200}
-                  className="border border-teal-700"
-                  onClick={() => setSelectedProduct(product)}
-                />
-              </SwiperSlide>
-            </div>
-          )
-        })}
-      </Swiper>
     </>
   )
 }
