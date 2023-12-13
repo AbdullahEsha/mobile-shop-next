@@ -128,8 +128,7 @@ const UserDetailsTable = ({ token }) => {
   }
 
   const handleOrders = () => {
-    if (loading || !orders.length) {
-      // return a loading spinner
+    if (loading) {
       return (
         <tr>
           <td className="px-6 py-4" colSpan={11}>

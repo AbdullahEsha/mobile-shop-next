@@ -1,4 +1,6 @@
 import jwt from 'jsonwebtoken'
+import User from '@/models/User'
+import { dbConnect, dbDisconnect } from '@/utils/db'
 
 const signToken = (user) => {
   return jwt.sign(
@@ -21,10 +23,28 @@ const isAuth = async (req, res, next) => {
   if (authorization) {
     // Bearer xxx => xxx
     const token = authorization.slice(7, authorization.length)
-    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decode) => {
       if (err) {
         res.status(401).send({ message: 'Token is not valid' })
       } else {
+        // fetch all users from db
+        await dbConnect()
+        const users = await User.findById(decode._id)
+        await dbDisconnect()
+
+        if (!users) {
+          res.status(401).send({ message: 'User not found' })
+          return
+        } else if (
+          users.password != decode.password ||
+          users.email !== decode.email
+        ) {
+          res.status(401).send({ message: 'Email/Password is not valid' })
+          return
+        } else if (!users.isAdmin || !decode.isAdmin) {
+          res.status(401).send({ message: 'User is not admin' })
+          return
+        }
         req.user = decode
         next()
       }
