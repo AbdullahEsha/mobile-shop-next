@@ -1,8 +1,42 @@
 import NavBar from '@/components/admin/NavBar'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import toast from 'react-hot-toast'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 const ChangePassword = () => {
-  const [error, setError] = useState('') //
+  const [error, setError] = useState('')
+  const token = Cookies.get('token')
+  const router = useRouter()
+
+  // check if token is valid
+  useEffect(() => {
+    if (!token) {
+      router.push('/admin-login')
+      toast.error('Please login first')
+    }
+  }, [router, token]) // Include dependencies for re-running the effect
+
+  const changePasswordHandle = async (submitData) => {
+    const url = `${process.env.API_URL}/api/admin/change-password`
+    const res = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(submitData),
+    })
+    const data = await res.json()
+    if (!res.ok) {
+      toast.error(data.message)
+    } else {
+      // delete token from cookie
+      Cookies.remove('token')
+      router.push('/admin-login')
+      toast.success(data.message)
+    }
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -13,6 +47,10 @@ const ChangePassword = () => {
     }
     if (submitData.newPassword != submitData.cPassword) {
       setError('Does not match to new password!') //
+    } else {
+      // send request to change password
+      changePasswordHandle(submitData)
+      setError('')
     }
   }
 

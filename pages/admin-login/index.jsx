@@ -27,6 +27,7 @@ const Login = () => {
       })
       router.push('/admin-dashboard')
     } else {
+      console.log('data', data)
       toast.error(data.message)
     }
   }
