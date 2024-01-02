@@ -2,6 +2,7 @@ import { useDispatch } from 'react-redux'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
+import Link from 'next/link'
 
 const NavBar = () => {
   const [navToggle, setNavToggle] = useState(false)
@@ -17,22 +18,10 @@ const NavBar = () => {
 
   return (
     <nav className="bg-teal-300 border-gray-200 dark:bg-gray-900">
-      <div className="container flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <Image
-            src="/iphone-logo.png"
-            width={100}
-            height={60}
-            alt="Logo"
-            priority={true}
-          />
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Digitoakart
-          </span>
-        </a>
+      <div className="container flex flex-wrap items-center justify-between mx-auto py-4">
+        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          Digitoakart
+        </span>
         <button
           data-collapse-toggle="navbar-default"
           onClick={() => setNavToggle(!navToggle)}
@@ -58,19 +47,29 @@ const NavBar = () => {
             />
           </svg>
         </button>
+        {/* should show on right side */}
         <div
-          className={` w-full md:block md:w-auto ${
+          className={`${
             navToggle ? 'block' : 'hidden'
-          }`}
-          id="navbar-default"
+          } w-full md:flex md:items-center md:w-auto`}
         >
-          {/* log out button */}
-          <button
-            onClick={logout}
-            className="text-white bg-teal-400 rounded-md py-2 px-4 hover:bg-teal-500 focus:outline-none focus:bg-teal-500"
-          >
-            Log out
-          </button>
+          <div className="flex flex-col items-center w-full text-sm font-semibold md:flex-row md:space-x-6 md:space-y-0 space-y-4">
+            <Link
+              href="/change-password"
+              className="py-2 text-gray-700 rounded-md dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-400"
+            >
+              Change Password
+            </Link>
+          </div>
+          <div className="flex items-center py-2 space-x-4 md:ml-4 md:space-x-6 justify-center">
+            <button
+              onClick={logout}
+              type="button"
+              className="inline-flex items-center justify-center h-10 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-teal-600 hover:bg-teal-700 focus:shadow-outline focus:outline-none"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </nav>
