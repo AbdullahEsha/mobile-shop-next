@@ -1,4 +1,5 @@
 import { createRouter } from 'next-connect'
+import macaddress from 'macaddress'
 import User from '@/models/User'
 import bcrypt from 'bcryptjs'
 import { dbConnect, dbDisconnect } from '@/utils/db'
@@ -14,6 +15,10 @@ router.post(async (req, res) => {
   await dbDisconnect()
   if (user && bcrypt.compareSync(password, user.password)) {
     const token = signToken(user)
+    // find my MAC address
+    const myMacAddress = await macaddress.all()
+    console.log('myMacAddress: ', myMacAddress)
+
     res.send({
       success: true,
       token,

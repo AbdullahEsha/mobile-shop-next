@@ -19,9 +19,12 @@ const NavBar = () => {
   return (
     <nav className="bg-teal-300 border-gray-200 dark:bg-gray-900">
       <div className="container flex flex-wrap items-center justify-between mx-auto py-4">
-        <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+        <Link
+          href="/admin-dashboard"
+          className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
+        >
           Digitoakart
-        </span>
+        </Link>
         <button
           data-collapse-toggle="navbar-default"
           onClick={() => setNavToggle(!navToggle)}
@@ -51,9 +54,17 @@ const NavBar = () => {
         <div
           className={`${
             navToggle ? 'block' : 'hidden'
-          } w-full md:flex md:items-center md:w-auto`}
+          } w-full md:flex md:items-center md:w-auto md:gap-3`}
         >
-          <div className="flex flex-col items-center w-full text-sm font-semibold md:flex-row md:space-x-6 md:space-y-0 space-y-4">
+          <div className="flex flex-col md:items-center w-auto text-sm font-semibold md:flex-row md:space-x-6 md:space-y-0 space-y-4">
+            <Link
+              href="/users"
+              className="py-2 text-gray-700 rounded-md dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-400"
+            >
+              Users
+            </Link>
+          </div>
+          <div className="flex flex-col md:items-center w-auto text-sm font-semibold md:flex-row md:space-x-6 md:space-y-0 space-y-4">
             <Link
               href="/change-password"
               className="py-2 text-gray-700 rounded-md dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-400"
