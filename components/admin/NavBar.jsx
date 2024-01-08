@@ -1,11 +1,13 @@
 import { useDispatch } from 'react-redux'
-import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 
 const NavBar = () => {
   const [navToggle, setNavToggle] = useState(false)
+  const router = useRouter()
 
   // logout
   const dispatch = useDispatch()
@@ -13,6 +15,8 @@ const NavBar = () => {
     dispatch({
       type: 'AUTH_LOGIN/logout',
     })
+    // redirect to login page
+    router.push('/admin-login')
     toast.success('Logout successfully!')
   }
 
