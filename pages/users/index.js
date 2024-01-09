@@ -2,13 +2,27 @@ import CustomizedAccordions from '@/components/CustomizedAccordions'
 import NavBar from '@/components/admin/NavBar'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import toast from 'react-hot-toast'
 
-const User = () => {
+// fetch data from api to use in main component api has headers with token
+export async function getServerSideProps(context) {
+  const url = `${process.env.API_URL}/api/admin/users`
+  const res = await fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${context.req.cookies.token}`,
+    },
+  })
+  const data = await res.json()
+  return {
+    props: { data }, // will be passed to the page component as props
+  }
+}
+
+const User = (props) => {
   const token = Cookies.get('token')
   const router = useRouter()
-  const [users, setUsers] = useState([]) //
 
   // check if token is valid
   useEffect(() => {
@@ -16,25 +30,6 @@ const User = () => {
       router.push('/admin-login')
       toast.error('Please login first')
     }
-    // fetch users
-    const url = `${process.env.API_URL}/api/admin/users`
-    const fetchUsers = async () => {
-      const res = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      const data = await res.json()
-      if (!res.ok) {
-        toast.error(data.message)
-      } else {
-        setUsers(data)
-      }
-    }
-    fetchUsers()
-
     // return () => {
     //   cleanup
     // }
@@ -79,7 +74,7 @@ const User = () => {
         </div>
 
         <div className="mt-4">
-          <CustomizedAccordions users={users} />
+          <CustomizedAccordions users={props.data} />
         </div>
       </div>
     </>
