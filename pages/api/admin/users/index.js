@@ -13,20 +13,24 @@ router.get(async (req, res) => {
   try {
     await dbConnect()
     const users = await User.find({})
-    const usersWithNetwork = await Promise.all(
-      users.map(async (user) => {
-        const network = await Network.findOne({ userId: user._id })
-        return {
-          _id: user._id,
-          email: user.email,
-          isAdmin: user.isAdmin,
-          updatedAt: user.updatedAt,
-          network,
-        }
-      }),
-    )
+    const network = await Network.find({})
     await dbDisconnect()
-    res.send(usersWithNetwork)
+    const usersWithNetwork = users.map((user) => {
+      const userNetwork = network.find(
+        (n) => n.userId.toString() === user._id.toString(),
+      )
+      return {
+        _id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        network: userNetwork,
+      }
+    })
+    res.send({
+      users: usersWithNetwork,
+      success: true,
+      message: 'successfully fetched users',
+    })
   } catch (error) {
     res.status(500).send({ message: error.message })
   }

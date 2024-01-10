@@ -10,7 +10,6 @@ const authSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      console.log(jsCoockie.get('token'))
       jsCoockie.set('token', action.payload.token, {
         expires: 24 * 60 * 60,
         // httpOnly: process.NEXT_ENV === 'development' ? false : true,

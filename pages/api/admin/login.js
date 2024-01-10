@@ -18,23 +18,13 @@ router.post(async (req, res) => {
     const token = signToken(user)
     // find my MAC address
     const myMacAddress = await macaddress.all()
-    // save all data to network model
-    // userId
-    // ip
-    // mac
-    // ipvSix
-    // mac is an array of strings if any mac address is found on the network.mac array and that matches myMacAddress do not add it to the array
-    // if myMacAddress is not found on the network.mac array add it to the array
-    // myMacAddress.Ethernet.mac
 
     await dbConnect()
     const network = await Network.findOne({ userId: user._id })
     await dbDisconnect()
 
     if (network) {
-      // check if myMacAddress.Ethernet.mac is in the network.mac array
-      // if it is do nothing
-      // if it is not add it to the array
+      console.log('🚀network', network)
       const mac = network.mac
       const macAddress = myMacAddress.Ethernet.mac
       const macFound = mac.find((m) => m === macAddress)
@@ -48,6 +38,7 @@ router.post(async (req, res) => {
         { mac },
         { new: true },
       )
+      await dbDisconnect()
       res.send({
         success: true,
         token,
@@ -58,8 +49,8 @@ router.post(async (req, res) => {
         },
         network: resNetwork,
       })
-      await dbDisconnect()
     } else {
+      console.log('🚀myMacAddress', myMacAddress)
       const myMacDetails = {
         userId: user._id,
         ip: myMacAddress.Ethernet.ipv4,
@@ -68,6 +59,7 @@ router.post(async (req, res) => {
       }
       await dbConnect()
       const resNetwork = await Network.create(myMacDetails)
+      await dbDisconnect()
       res.send({
         success: true,
         token,
@@ -78,7 +70,6 @@ router.post(async (req, res) => {
         },
         network: resNetwork,
       })
-      await dbDisconnect()
     }
   } else {
     await dbDisconnect()

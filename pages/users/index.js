@@ -12,15 +12,23 @@ const User = () => {
   const url = `${process.env.API_URL}/api/admin/users`
 
   const [users, setUsers] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchUsers = useCallback(async () => {
+    setIsLoading(true)
     const res = await fetch(url, {
       headers: {
         authorization: `Bearer ${token}`,
       },
     })
     const data = await res.json()
-    setUsers(data)
+    if (data.success) {
+      setUsers(data.users)
+      setIsLoading(false)
+    } else {
+      toast.error(data.message)
+      setIsLoading(false)
+    }
   }, [token, url])
 
   useEffect(() => {
@@ -64,8 +72,6 @@ const User = () => {
     }
   }
 
-  console.log('users', users)
-
   return (
     <>
       <NavBar />
@@ -105,7 +111,13 @@ const User = () => {
         </form>
 
         <div className="mt-4">
-          <CustomizedAccordions users={users} setUsers={setUsers} />
+          {isLoading ? (
+            <div className="flex justify-center items-center border border-spacing-2 py-10">
+              <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-teal-500"></div>
+            </div>
+          ) : (
+            <CustomizedAccordions users={users} setUsers={setUsers} />
+          )}
         </div>
       </div>
     </>

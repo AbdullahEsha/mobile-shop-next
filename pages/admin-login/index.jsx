@@ -7,39 +7,38 @@ const Login = () => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const login = async (submitData) => {
-    const response = await fetch(`${process.env.API_URL}/api/admin/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(submitData),
-    })
-    const data = await response.json()
-    console.log('data login', data)
-    if (response.ok) {
-      toast.success('Login successfully')
-      dispatch({
-        type: 'AUTH_LOGIN/login',
-        payload: {
-          token: data.token,
-          user: JSON.stringify(data.user),
-        },
-      })
-      router.push('/admin-dashboard')
-    } else {
-      console.log('data', data)
-      toast.error(data.message)
-    }
-  }
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     const submitData = {
       email: event.target.email.value,
       password: event.target.password.value,
     }
-    login(submitData)
+    try {
+      const response = await fetch(`${process.env.API_URL}/api/admin/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+      const data = await response.json()
+      if (response.ok) {
+        toast.success('Login successfully')
+        dispatch({
+          type: 'AUTH_LOGIN/login',
+          payload: {
+            token: data.token,
+            user: JSON.stringify(data.user),
+          },
+        })
+        router.push('/admin-dashboard')
+      } else {
+        console.log('data', data)
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
   return (
