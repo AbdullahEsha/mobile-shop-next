@@ -2,38 +2,69 @@ import CustomizedAccordions from '@/components/CustomizedAccordions'
 import NavBar from '@/components/admin/NavBar'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { use, useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-// fetch data from api to use in main component api has headers with token
-export async function getServerSideProps(context) {
-  const url = `${process.env.API_URL}/api/admin/users`
-  const res = await fetch(url, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${context.req.cookies.token}`,
-    },
-  })
-  const data = await res.json()
-  return {
-    props: { data }, // will be passed to the page component as props
-  }
-}
-
-const User = (props) => {
+const User = () => {
   const token = Cookies.get('token')
   const router = useRouter()
 
-  // check if token is valid
+  const url = `${process.env.API_URL}/api/admin/users`
+
+  const [users, setUsers] = useState([])
+
+  const fetchUsers = useCallback(async () => {
+    const res = await fetch(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    const data = await res.json()
+    setUsers(data)
+  }, [token, url])
+
   useEffect(() => {
     if (!token) {
       router.push('/admin-login')
       toast.error('Please login first')
     }
+    fetchUsers()
     // return () => {
     //   cleanup
     // }
-  }, [router, token]) // Include dependencies for re-running the effect
+  }, [fetchUsers, router, token, url]) // Include dependencies for re-running the effect
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const email = e.target.email.value
+    const password = e.target.password.value
+    const registerUrl = `${process.env.API_URL}/api/admin/register`
+    if (email === '' || password === '') {
+      toast.error('Please enter email and password')
+      return
+    } else {
+      fetch(registerUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ email, password }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            toast.success('User created')
+            fetchUsers()
+          } else {
+            toast.error(data.message)
+          }
+        })
+        .catch((err) => toast.error(err))
+    }
+  }
+
+  console.log('users', users)
 
   return (
     <>
@@ -43,38 +74,38 @@ const User = (props) => {
           New User
         </h2>
         {/* use grid cols to create user inputs with only email and password */}
-        <div className="md:grid md:grid-cols-3 md:gap-2">
-          {/* <form onSubmit={handleSubmit} className="space-y-6"> */}
-          <div className="rounded-md shadow-sm">
-            <input
-              id="email"
-              type="email"
-              required
-              placeholder="Email"
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm sm:leading-5"
-            />
+        <form onSubmit={handleSubmit}>
+          <div className="md:grid md:grid-cols-3 md:gap-2">
+            <div className="rounded-md shadow-sm">
+              <input
+                id="email"
+                type="email"
+                required
+                placeholder="Email"
+                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm sm:leading-5"
+              />
+            </div>
+            <div className="rounded-md shadow-sm">
+              <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                required
+                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm sm:leading-5"
+              />
+            </div>
+            {/* button for submit */}
+            <button
+              type="submit"
+              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+            >
+              Create
+            </button>
           </div>
-          <div className="rounded-md shadow-sm">
-            <input
-              id="password"
-              type="password"
-              placeholder="Password"
-              required
-              className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-teal-500 focus:border-teal-500 focus:z-10 sm:text-sm sm:leading-5"
-            />
-          </div>
-          {/* button for submit */}
-          <button
-            type="submit"
-            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-teal-500 hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
-          >
-            Create
-          </button>
-          {/* </form> */}
-        </div>
+        </form>
 
         <div className="mt-4">
-          <CustomizedAccordions users={props.data} />
+          <CustomizedAccordions users={users} setUsers={setUsers} />
         </div>
       </div>
     </>

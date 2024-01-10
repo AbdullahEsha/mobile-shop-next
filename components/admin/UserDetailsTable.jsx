@@ -9,7 +9,6 @@ const UserDetailsTable = ({ token }) => {
   const router = useRouter()
 
   useEffect(() => {
-    // fetch all the data from api localhost:3000/api/admin/orders
     setLoading(true)
     fetch(`${process.env.API_URL}/api/admin/orders`, {
       method: 'GET',

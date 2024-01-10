@@ -16,6 +16,7 @@ const Login = () => {
       body: JSON.stringify(submitData),
     })
     const data = await response.json()
+    console.log('data login', data)
     if (response.ok) {
       toast.success('Login successfully')
       dispatch({
