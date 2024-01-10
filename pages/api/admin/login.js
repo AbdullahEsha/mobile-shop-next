@@ -24,7 +24,6 @@ router.post(async (req, res) => {
     await dbDisconnect()
 
     if (network) {
-      console.log('🚀network', network)
       const mac = network.mac
       const macAddress = myMacAddress.Ethernet.mac
       const macFound = mac.find((m) => m === macAddress)
@@ -50,7 +49,6 @@ router.post(async (req, res) => {
         network: resNetwork,
       })
     } else {
-      console.log('🚀myMacAddress', myMacAddress)
       const myMacDetails = {
         userId: user._id,
         ip: myMacAddress.Ethernet.ipv4,
