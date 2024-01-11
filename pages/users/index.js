@@ -2,7 +2,7 @@ import CustomizedAccordions from '@/components/CustomizedAccordions'
 import NavBar from '@/components/admin/NavBar'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { use, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 const User = () => {

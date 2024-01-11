@@ -22,6 +22,7 @@ const Login = () => {
         body: JSON.stringify(submitData),
       })
       const data = await response.json()
+      console.log('data response: ', data)
       if (response.ok) {
         toast.success('Login successfully')
         dispatch({
@@ -33,7 +34,7 @@ const Login = () => {
         })
         router.push('/admin-dashboard')
       } else {
-        console.log('data', data)
+        console.log('data error login: ', data)
         toast.error(data.message)
       }
     } catch (error) {

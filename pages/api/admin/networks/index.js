@@ -1,12 +1,10 @@
 import { createRouter } from 'next-connect'
 import Network from '@/models/Network'
+import macaddress from 'macaddress'
 import { dbConnect, dbDisconnect } from '@/utils/db'
 import { onError } from '@/utils/error'
-import { isAdmin, isAuth } from '@/utils/auth'
 
 const router = createRouter({ onError })
-
-router.use(isAuth, isAdmin)
 
 router.get(async (req, res) => {
   await dbConnect()
