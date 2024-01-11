@@ -6,6 +6,27 @@ import { onError } from '@/utils/error'
 
 const router = createRouter({ onError })
 
+// get network
+
+router.get(async (req, res) => {
+  const user_id = req.query.id
+  try {
+    await dbConnect()
+    const network = await Network.findOne({ userId: user_id })
+    await dbDisconnect()
+    if (network) {
+      res.send({ success: true, network, message: 'Network found!' })
+    } else {
+      res.status(404).send({
+        success: false,
+        message: 'Network not found',
+      })
+    }
+  } catch (error) {
+    res.status(500).send({ message: error.message, success: false })
+  }
+})
+
 router.post(async (req, res) => {
   const user_id = req.query.id
   try {
@@ -66,9 +87,9 @@ router.patch(async (req, res) => {
           })
         }
       } else {
-        res.status(500).send({
-          success: false,
-          message: 'Network not found to update',
+        res.status(200).send({
+          success: true,
+          message: 'Network mac already exists',
         })
       }
     } else {

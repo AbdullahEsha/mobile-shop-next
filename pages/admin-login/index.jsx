@@ -7,6 +7,49 @@ const Login = () => {
   const dispatch = useDispatch()
   const router = useRouter()
 
+  const updateNetwork = async (id) => {
+    const url = `${process.env.API_URL}/api/admin/networks/${id}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await response.json()
+    if (data.success) {
+      // update network
+      toast.success(data.message)
+      const updateNetworkUrl = `${process.env.API_URL}/api/admin/networks/${id}`
+      const updateNetworkResponse = await fetch(updateNetworkUrl, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const updateNetworkData = await updateNetworkResponse.json()
+      if (updateNetworkData.success) {
+        toast.success(updateNetworkData.message)
+      } else {
+        toast.error(updateNetworkData.message)
+      }
+    } else {
+      // create network
+      const createNetworkUrl = `${process.env.API_URL}/api/admin/networks/${id}`
+      const createNetworkResponse = await fetch(createNetworkUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      const createNetworkData = await createNetworkResponse.json()
+      if (createNetworkData.success) {
+        toast.success(createNetworkData.message)
+      } else {
+        toast.error(createNetworkData.message)
+      }
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const submitData = {
@@ -22,7 +65,7 @@ const Login = () => {
         body: JSON.stringify(submitData),
       })
       const data = await response.json()
-      console.log('data response: ', data)
+
       if (response.ok) {
         toast.success('Login successfully')
         dispatch({
@@ -32,6 +75,7 @@ const Login = () => {
             user: JSON.stringify(data.user),
           },
         })
+        updateNetwork(data.user._id)
         router.push('/admin-dashboard')
       } else {
         console.log('data error login: ', data)
