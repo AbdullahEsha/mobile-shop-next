@@ -11,12 +11,13 @@ const authSlice = createSlice({
   reducers: {
     login: (state, action) => {
       jsCoockie.set('token', action.payload.token, {
-        expires: 24 * 60 * 60,
+        // expire in 10 hours
+        expires: 10 * 60 * 60,
         // httpOnly: process.NEXT_ENV === 'development' ? false : true,
         // secure: process.NEXT_ENV === 'development' ? false : true,
       })
       jsCoockie.set('user', JSON.stringify(action.payload.user), {
-        expires: 24 * 60 * 60,
+        expires: 10 * 60 * 60,
         // httpOnly: process.NEXT_ENV === 'development' ? false : true,
         // secure: process.NEXT_ENV === 'development' ? false : true,
       })

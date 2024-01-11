@@ -12,7 +12,7 @@ const signToken = (user) => {
     },
     process.env.JWT_SECRET,
     {
-      expiresIn: '30d',
+      expiresIn: '10h',
       // httpOnly: process.env.NEXT_ENV === 'production' ? true : false,
     },
   )

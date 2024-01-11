@@ -10,7 +10,6 @@ const router = createRouter({ onError })
 router.use(isAuth, isAdmin)
 
 router.post(async (req, res) => {
-  console.log('req.body', req.user)
   if (req.user.email === 'nayem831021@gmail.com') {
     await dbConnect()
     const { email, password, isAdmin } = req.body
