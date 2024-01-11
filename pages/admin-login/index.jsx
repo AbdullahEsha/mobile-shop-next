@@ -8,45 +8,18 @@ const Login = () => {
   const router = useRouter()
 
   const updateNetwork = async (id) => {
-    const url = `${process.env.API_URL}/api/admin/networks/${id}`
-    const response = await fetch(url, {
-      method: 'GET',
+    const updateNetworkUrl = `${process.env.API_URL}/api/admin/networks/${id}`
+    const updateNetworkResponse = await fetch(updateNetworkUrl, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
     })
-    const data = await response.json()
-    if (data.success) {
-      // update network
-      toast.success(data.message)
-      const updateNetworkUrl = `${process.env.API_URL}/api/admin/networks/${id}`
-      const updateNetworkResponse = await fetch(updateNetworkUrl, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const updateNetworkData = await updateNetworkResponse.json()
-      if (updateNetworkData.success) {
-        toast.success(updateNetworkData.message)
-      } else {
-        toast.error(updateNetworkData.message)
-      }
+    const updateNetworkData = await updateNetworkResponse.json()
+    if (updateNetworkData.success) {
+      toast.success(updateNetworkData.message)
     } else {
-      // create network
-      const createNetworkUrl = `${process.env.API_URL}/api/admin/networks/${id}`
-      const createNetworkResponse = await fetch(createNetworkUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const createNetworkData = await createNetworkResponse.json()
-      if (createNetworkData.success) {
-        toast.success(createNetworkData.message)
-      } else {
-        toast.error(createNetworkData.message)
-      }
+      toast.error(updateNetworkData.message)
     }
   }
 

@@ -34,24 +34,59 @@ router.post(async (req, res) => {
     const netDetails = {
       userId: user_id,
       ip: networkDetails.Ethernet.ipv4,
-      mac: [networkDetails.Ethernet.mac],
+      mac: networkDetails.Ethernet.mac,
       ipvSix: networkDetails.Ethernet.ipv6,
     }
     await dbConnect()
-    const network = new Network(netDetails)
-    const createdNetwork = await network.save()
+    const network = await Network.findOne({ userId: user_id })
     await dbDisconnect()
-    if (createdNetwork) {
-      res.status(201).send({
-        success: true,
-        message: 'Network created successfully',
-        data: createdNetwork,
-      })
+    if (network) {
+      // update network mac address if it doesn't exist in the array
+      if (!network.mac.includes(netDetails.mac)) {
+        network.mac.push(netDetails.mac)
+        await dbConnect()
+        const updatedNetwork = await network.save()
+        await dbDisconnect()
+        if (updatedNetwork) {
+          res.status(200).send({
+            success: true,
+            message: 'Network updated successfully',
+            data: updatedNetwork,
+          })
+        } else {
+          res.status(500).send({
+            success: false,
+            message: 'Network could not be updated',
+          })
+        }
+      } else {
+        // update the updatedAt field if the mac address already exists
+        network.updatedAt = Date.now()
+        await dbConnect()
+        const updatedNetwork = await network.save()
+        await dbDisconnect()
+        res.status(200).send({
+          success: true,
+          message: 'Network mac already exists',
+          data: updatedNetwork,
+        })
+      }
     } else {
-      res.status(500).send({
-        success: false,
-        message: 'Network could not be created',
-      })
+      await dbConnect()
+      const newNetwork = await Network.create(netDetails)
+      await dbDisconnect()
+      if (newNetwork) {
+        res.status(201).send({
+          success: true,
+          message: 'Network created successfully',
+          data: newNetwork,
+        })
+      } else {
+        res.status(500).send({
+          success: false,
+          message: 'Network could not be created',
+        })
+      }
     }
   } catch (error) {
     res.status(500).send({ message: error.message })
