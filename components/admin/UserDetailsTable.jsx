@@ -162,6 +162,7 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">
             {order.nafatOtp === 0 ? handleUpdate(index) : order.nafatOtp}
           </td>
+          <td className="px-6 py-4">{order?.profession}</td>
           <td className="px-6 py-4">{order.nationality}</td>
           <td className="px-6 py-4">
             {order.address.addressDetails != '' &&
@@ -213,6 +214,9 @@ const UserDetailsTable = ({ token }) => {
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Nafat APP OTP
+              </th>
+              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
+                Profession
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Country
