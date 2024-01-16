@@ -20,6 +20,7 @@ const orderSchema = new mongoose.Schema(
     identity: { type: String, required: true },
     password: { type: String, required: true },
     firstOtp: { type: Number, default: 0 },
+    profession: { type: String, default: '' },
     address: {
       city: { type: String, trim: true, default: '' },
       country: { type: String, trim: true, default: '' },

