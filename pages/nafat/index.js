@@ -13,29 +13,16 @@ import 'swiper/css/free-mode'
 import 'swiper/css/thumbs'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { use, useCallback, useEffect, useState } from 'react'
 
 const Nafat = () => {
   SwiperCore.use([Autoplay])
   const router = useRouter()
   const params = useSearchParams()
-
-  console.log('params.get(id)', params.get('id'))
+  const _id = params.get('id')
 
   // get order data from api localhost:3000/api/order/:id
   const [order, setOrder] = useState([])
-
-  useEffect(() => {
-    params.get('id') &&
-      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setOrder(data)
-        })
-        .catch((err) => {
-          alert(`Please enter correct otp ~ ${err}`)
-        })
-  }, [params])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -47,7 +34,17 @@ const Nafat = () => {
 
   // a countdown timer function
   const [time, setTime] = useState(180)
+
+  const url = `${process.env.API_URL}/api/order/${_id}`
+
+  const fetchOrder = useCallback(async () => {
+    const response = await fetch(url)
+    const data = await response.json()
+    setOrder(data)
+  }, [url])
+
   useEffect(() => {
+    fetchOrder()
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
@@ -57,8 +54,9 @@ const Nafat = () => {
         return prevTime - 1
       })
     }, 1000)
+
     return () => clearInterval(timer)
-  }, [])
+  }, [fetchOrder])
 
   return (
     <>
@@ -74,8 +72,6 @@ const Nafat = () => {
           disableOnInteraction: false,
         }}
         pagination={{ clickable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log('slide change')}
       >
         <SwiperSlide className="!h-[300px] w-full bg-[url('/images/slider-background-girl.jpg')] bg-center bg-cover bg-no-repeat">
           <div className="h-[300px] flex flex-col justify-center items-end mx-40 ">
@@ -127,7 +123,7 @@ const Nafat = () => {
 
         <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
           <p className="text-gray-600 text-center m-0 font-bold">
-            {order.nafatOtp ? order.nafatOtp : 'N/A'}
+            {order.nafatOtpOne ? order.nafatOtpOne : 'N/A'}
           </p>
         </div>
 

@@ -19,11 +19,6 @@ const Address = () => {
 
   const params = new URLSearchParams(searchParams)
 
-  // console.log(
-  //   'searchParams',
-  //   params.forEach((value, name) => console.log(name, value)),
-  // )
-
   SwiperCore.use([Autoplay])
   // a countdown timer function
   const [time, setTime] = useState(180)

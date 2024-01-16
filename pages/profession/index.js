@@ -39,7 +39,10 @@ const Profession = () => {
         .then((res) => res.json())
         .then((data) => {
           if (data) {
-            router.push('/nafat-app')
+            router.push({
+              pathname: '/nafat-app',
+              query: { id: params.get('id') },
+            })
           } else {
             toast.error('Please enter correct otp')
           }

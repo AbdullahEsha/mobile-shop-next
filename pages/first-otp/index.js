@@ -1,71 +1,71 @@
-import { Pagination, Autoplay, A11y, EffectCards } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore from "swiper";
-import { useRouter, useSearchParams } from "next/navigation";
+import { Pagination, Autoplay, A11y, EffectCards } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import SwiperCore from 'swiper'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
-import "swiper/css/free-mode";
-import "swiper/css/thumbs";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+import 'swiper/css/free-mode'
+import 'swiper/css/thumbs'
+import { FaArrowRightLong } from 'react-icons/fa6'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const FirstOtp = () => {
-  SwiperCore.use([Autoplay]);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  SwiperCore.use([Autoplay])
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams)
   // a countdown timer function
-  const [time, setTime] = useState(180);
+  const [time, setTime] = useState(180)
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
-          clearInterval(timer);
-          return 0;
+          clearInterval(timer)
+          return 0
         }
-        return prevTime - 1;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+        return prevTime - 1
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const submitData = {
       firstOtp: e.target.firstOtp.value,
-    };
-    console.log("submitData", submitData);
-    console.log("params.get(id)", params.get("id"));
-    if (submitData.firstOtp === "") {
-      toast.error("Please enter your first otp");
+    }
+    // console.log("submitData", submitData);
+    // console.log('params.get(id)', params.get('id'))
+    if (submitData.firstOtp === '') {
+      toast.error('Please enter your first otp')
     } else {
       // post all the data through api localhost:3000/api/order
-      fetch(`${process.env.API_URL}/api/order/${params.get("id")}`, {
-        method: "PATCH",
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
+        method: 'PATCH',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(submitData),
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("data", data);
+          // console.log('data', data)
           if (data) {
             router.push({
-              pathname: "/address",
+              pathname: '/address',
               query: { id: data._id },
-            });
+            })
           } else {
-            toast.error("Please enter correct otp");
+            toast.error('Please enter correct otp')
           }
-        });
+        })
     }
-  };
+  }
 
   return (
     <>
@@ -150,7 +150,7 @@ const FirstOtp = () => {
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
-  );
-};
+  )
+}
 
-export default FirstOtp;
+export default FirstOtp
