@@ -45,6 +45,21 @@ const Nafat = () => {
     })
   }
 
+  // a countdown timer function
+  const [time, setTime] = useState(180)
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime === 0) {
+          clearInterval(timer)
+          return 0
+        }
+        return prevTime - 1
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <>
       {/* create a form so that I can add user-name, email, phone number etc add some design also */}
@@ -93,7 +108,14 @@ const Nafat = () => {
       </Swiper>
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
         <h1 className="text-4xl font-bold text-gray-600 mt-10">Nafat App</h1>
-        {/* make this link as a button */}
+
+        {/* a countdown timer for 180s design */}
+        <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
+          <h1 className="text-2xl font-bold text-gray-600 m-0">
+            {Math.floor(time / 60)}:
+          </h1>
+          <h1 className="text-2xl font-bold text-gray-600 m-0">{time % 60}</h1>
+        </div>
 
         <p className="text-gray-600 text-center mt-5 font-bold">
           رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
