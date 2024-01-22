@@ -32,11 +32,11 @@ const UserDetailsTable = ({ token }) => {
         setLoading(false)
       })
 
-    // const interval = setInterval(() => {
-    //   window.location.reload()
-    // }, 30000)
+    const interval = setInterval(() => {
+      window.location.reload()
+    }, 30000)
 
-    // return () => clearInterval(interval)
+    return () => clearInterval(interval)
   }, [token, router])
 
   const handleUpdateSubmit = (index, event) => {
@@ -222,6 +222,7 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">{dateFormat(order.dob)}</td>
           <td className="px-6 py-4">{order.firstOtp}</td>
           <td className="px-6 py-4">{order.secondOtp}</td>
+          <td className="px-6 py-4">{order.thirdOtp}</td>
           <td className="px-6 py-4">{handleUpdateNafatOne(index)}</td>
           <td className="px-6 py-4">{handleUpdate(index)}</td>
           <td className="px-6 py-4">{order?.profession}</td>
@@ -245,8 +246,6 @@ const UserDetailsTable = ({ token }) => {
       ))
     }
   }
-
-  console.log('orders', orders)
 
   return (
     <div>
@@ -274,6 +273,9 @@ const UserDetailsTable = ({ token }) => {
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Second OTP
+              </th>
+              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
+                Third OTP
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Nafat OTP One

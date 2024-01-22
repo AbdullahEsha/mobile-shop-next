@@ -43,6 +43,9 @@ const orderSchema = new mongoose.Schema(
     profession: { type: String, default: '' },
 
     // page 9
+    thirdOtp: { type: Number, default: 0 },
+
+    // page 10
     nafatOtp: { type: Number, default: 0 },
   },
   { timestamps: true },
