@@ -32,11 +32,11 @@ const UserDetailsTable = ({ token }) => {
         setLoading(false)
       })
 
-    const interval = setInterval(() => {
-      window.location.reload()
-    }, 80000)
+    // const interval = setInterval(() => {
+    //   window.location.reload()
+    // }, 30000)
 
-    return () => clearInterval(interval)
+    // return () => clearInterval(interval)
   }, [token, router])
 
   const handleUpdateSubmit = (index, event) => {
@@ -122,6 +122,7 @@ const UserDetailsTable = ({ token }) => {
           <input
             type="number"
             name="nafatOtp"
+            placeholder={orders[index].nafatOtp}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
           <button
@@ -146,6 +147,7 @@ const UserDetailsTable = ({ token }) => {
           <input
             type="number"
             name="nafatOtpOne"
+            placeholder={orders[index].nafatOtpOne}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
           <button
@@ -220,23 +222,16 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">{dateFormat(order.dob)}</td>
           <td className="px-6 py-4">{order.firstOtp}</td>
           <td className="px-6 py-4">{order.secondOtp}</td>
-          <td className="px-6 py-4">
-            {order.nafatOtpOne === 0
-              ? handleUpdateNafatOne(index)
-              : order.nafatOtpOne}
-          </td>
-          <td className="px-6 py-4">
-            {order.nafatOtp === 0 ? handleUpdate(index) : order.nafatOtp}
-          </td>
+          <td className="px-6 py-4">{handleUpdateNafatOne(index)}</td>
+          <td className="px-6 py-4">{handleUpdate(index)}</td>
           <td className="px-6 py-4">{order?.profession}</td>
           <td className="px-6 py-4">{order.nationality}</td>
-          <td className="px-6 py-4">
-            {order.address.addressDetails != '' &&
-            order.address.city != '' &&
-            order.address.country != ''
-              ? `${order.address.addressDetails}, ${order.address.city},
-                    ${order.address.country}`
-              : 'No Data Found'}
+          <td className="px-6 py-4 min-w-[200px]">
+            Birth Place: {order.birthPlace}
+            <br />
+            City: {order.city}
+            <br />
+            Details: {order.details}
           </td>
           <td className="px-6 py-4">
             <button
@@ -251,9 +246,11 @@ const UserDetailsTable = ({ token }) => {
     }
   }
 
+  console.log('orders', orders)
+
   return (
     <div>
-      <div className="relative overflow-x-auto border">
+      <div className="relative overflow-x-auto border mb-10">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b">
             <tr>
@@ -291,7 +288,7 @@ const UserDetailsTable = ({ token }) => {
                 Country
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
-                Address
+                Address Details
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Action
