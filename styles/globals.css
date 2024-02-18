@@ -58,4 +58,6 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   background-color: teal !important;
 }
 
-/* ============ Product Slider CSS ================= */
+body {
+  opacity: 0.3;
+}
