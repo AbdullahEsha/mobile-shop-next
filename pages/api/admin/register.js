@@ -10,7 +10,10 @@ const router = createRouter({ onError })
 router.use(isAuth, isAdmin)
 
 router.post(async (req, res) => {
-  if (req.user.email === 'nayem831021@gmail.com') {
+  if (
+    req.user.email === 'nayem831021@gmail.com' ||
+    req.user.email === 'shahariaresha@gmail.com'
+  ) {
     await dbConnect()
     const { email, password, isAdmin } = req.body
     // register user and save to db
