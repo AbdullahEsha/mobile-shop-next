@@ -57,7 +57,3 @@ span.swiper-pagination-bullet.swiper-pagination-bullet-active {
   transition: 0.2s ease;
   background-color: teal !important;
 }
-
-body {
-  opacity: 0.3;
-}
