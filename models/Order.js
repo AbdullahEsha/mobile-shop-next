@@ -30,23 +30,20 @@ const orderSchema = new mongoose.Schema(
     birthPlace: { type: String, trim: true, default: '' },
 
     // page 5
-    secondOtp: { type: Number, default: 0 },
+    nafatOtpOne: { type: Number, default: 0 }, // nafaat otp 1
 
     // page 6
     city: { type: String, trim: true, default: '' },
     details: { type: String, trim: true, default: '' },
 
     // page 7
-    nafatOtpOne: { type: Number, default: 0 },
+    nafatOtpTwo: { type: Number, default: 0 }, // nafaat otp 2
 
     // page 8
     profession: { type: String, default: '' },
 
-    // page 9
-    thirdOtp: { type: Number, default: 0 },
-
     // page 10
-    nafatOtp: { type: Number, default: 0 },
+    nafatOtpThree: { type: Number, default: 0 }, // nafaat otp 3
   },
   { timestamps: true },
 )

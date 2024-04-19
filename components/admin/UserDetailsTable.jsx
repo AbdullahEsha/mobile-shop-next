@@ -111,18 +111,18 @@ const UserDetailsTable = ({ token }) => {
     }
   }
 
-  const handleUpdate = (index) => {
+  const handleUpdateNafatOne = (index) => {
     // return a input field with a button to update the nafat otp
     return (
       <div className="">
         <form
-          onSubmit={(event) => handleUpdateSubmit(index, event)}
+          onSubmit={(event) => handleUpdateNafatOneSubmit(index, event)}
           className="flex flex-col gap-1 justify-center items-center"
         >
           <input
             type="number"
-            name="nafatOtp"
-            placeholder={orders[index].nafatOtp}
+            name="nafatOtpOne"
+            placeholder={orders[index].nafatOtpOne}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
           <button
@@ -136,7 +136,7 @@ const UserDetailsTable = ({ token }) => {
     )
   }
 
-  const handleUpdateNafatOne = (index) => {
+  const handleUpdateNafatTwo = (index) => {
     // return a input field with a button to update the nafat otp
     return (
       <div className="">
@@ -147,7 +147,32 @@ const UserDetailsTable = ({ token }) => {
           <input
             type="number"
             name="nafatOtpOne"
-            placeholder={orders[index].nafatOtpOne}
+            placeholder={orders[index].nafatOtpTwo}
+            className="w-20 px-2 py-1 border rounded-md outline-none"
+          />
+          <button
+            className="px-4 py-1 text-white bg-blue-500 rounded-md"
+            type="submit"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    )
+  }
+
+  const handleUpdateNafatThree = (index) => {
+    // return a input field with a button to update the nafat otp
+    return (
+      <div className="">
+        <form
+          onSubmit={(event) => handleUpdateNafatOneSubmit(index, event)}
+          className="flex flex-col gap-1 justify-center items-center"
+        >
+          <input
+            type="number"
+            name="nafatOtpOne"
+            placeholder={orders[index].nafatOtpThree}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
           <button
@@ -221,10 +246,9 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">{order.password}</td>
           <td className="px-6 py-4">{dateFormat(order.dob)}</td>
           <td className="px-6 py-4">{order.firstOtp}</td>
-          <td className="px-6 py-4">{order.secondOtp}</td>
-          <td className="px-6 py-4">{order.thirdOtp}</td>
           <td className="px-6 py-4">{handleUpdateNafatOne(index)}</td>
-          <td className="px-6 py-4">{handleUpdate(index)}</td>
+          <td className="px-6 py-4">{handleUpdateNafatTwo(index)}</td>
+          <td className="px-6 py-4">{handleUpdateNafatThree(index)}</td>
           <td className="px-6 py-4">{order?.profession}</td>
           <td className="px-6 py-4">{order.nationality}</td>
           <td className="px-6 py-4 min-w-[200px]">
@@ -272,16 +296,13 @@ const UserDetailsTable = ({ token }) => {
                 First OTP
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
-                Second OTP
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
-                Third OTP
-              </th>
-              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Nafat OTP One
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Nafat OTP Two
+              </th>
+              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
+                Nafat OTP Three
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Profession

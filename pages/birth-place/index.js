@@ -30,7 +30,7 @@ const BirthPlace = () => {
         .then((data) => {
           if (data) {
             router.push({
-              pathname: '/second-otp',
+              pathname: '/nafat-otp-one',
               query: { id: data._id },
             })
           } else {

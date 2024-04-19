@@ -33,7 +33,7 @@ const Address = () => {
         .then((data) => {
           if (data) {
             router.push({
-              pathname: '/nafat',
+              pathname: '/nafat-otp-two',
               query: { id: data._id },
             })
           } else {

