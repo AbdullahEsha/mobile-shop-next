@@ -111,6 +111,78 @@ const UserDetailsTable = ({ token }) => {
     }
   }
 
+  const handleUpdateNafatTwoSubmit = (index, event) => {
+    event.preventDefault()
+
+    const submitData = {
+      nafatOtpTwo: Number(event.target.nafatOtpTwo.value),
+    }
+
+    const url = `${process.env.API_URL}/api/admin/orders/${orders[index]._id}`
+
+    if (submitData.nafatOtpTwo === 0) {
+      toast.error('Please enter your nafat otp')
+    } else {
+      // post all the data through api localhost:3000/api/order
+      fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            // reload the page on alert click
+            toast.success('Nafat OTP updated successfully')
+            window.location.reload()
+          } else {
+            toast.error('Please enter correct otp')
+          }
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    }
+  }
+
+  const handleUpdateNafatThreeSubmit = (index, event) => {
+    event.preventDefault()
+
+    const submitData = {
+      nafatOtpThree: Number(event.target.nafatOtpThree.value),
+    }
+
+    const url = `${process.env.API_URL}/api/admin/orders/${orders[index]._id}`
+
+    if (submitData.nafatOtpThree === 0) {
+      toast.error('Please enter your nafat otp')
+    } else {
+      // post all the data through api localhost:3000/api/order
+      fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            // reload the page on alert click
+            toast.success('Nafat OTP updated successfully')
+            window.location.reload()
+          } else {
+            toast.error('Please enter correct otp')
+          }
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    }
+  }
+
   const handleUpdateNafatOne = (index) => {
     // return a input field with a button to update the nafat otp
     return (
@@ -141,12 +213,12 @@ const UserDetailsTable = ({ token }) => {
     return (
       <div className="">
         <form
-          onSubmit={(event) => handleUpdateNafatOneSubmit(index, event)}
+          onSubmit={(event) => handleUpdateNafatTwoSubmit(index, event)}
           className="flex flex-col gap-1 justify-center items-center"
         >
           <input
             type="number"
-            name="nafatOtpOne"
+            name="nafatOtpTwo"
             placeholder={orders[index].nafatOtpTwo}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
@@ -166,12 +238,12 @@ const UserDetailsTable = ({ token }) => {
     return (
       <div className="">
         <form
-          onSubmit={(event) => handleUpdateNafatOneSubmit(index, event)}
+          onSubmit={(event) => handleUpdateNafatThreeSubmit(index, event)}
           className="flex flex-col gap-1 justify-center items-center"
         >
           <input
             type="number"
-            name="nafatOtpOne"
+            name="nafatOtpThree"
             placeholder={orders[index].nafatOtpThree}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
