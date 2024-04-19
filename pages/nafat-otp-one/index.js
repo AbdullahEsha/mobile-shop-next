@@ -58,7 +58,6 @@ const NafatOtpOne = () => {
         <h1 className="text-4xl font-bold text-gray-600 mt-10">
           Nafath App OTP1
         </h1>
-
         {/* a countdown timer for 180s design */}
         <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
           <h1 className="text-2xl font-bold text-gray-600 m-0">
@@ -66,7 +65,6 @@ const NafatOtpOne = () => {
           </h1>
           <h1 className="text-2xl font-bold text-gray-600 m-0">{time % 60}</h1>
         </div>
-
         <p className="text-gray-600 text-center mt-5 font-bold">
           رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
         </p>
@@ -74,13 +72,11 @@ const NafatOtpOne = () => {
           Please accept the login request from Nafath app
         </p>
         {/* a countdown design round border */}
-
         <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
           <p className="text-gray-600 text-center m-0 font-bold">
             {order.nafatOtpOne ? order.nafatOtpOne : 'N/A'}
           </p>
         </div>
-
         <Link
           href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
           target="_blank"

