@@ -144,35 +144,52 @@ const Home = () => {
               : "iPhone 14 Pro Max"}
           </h3>
           <hr />
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-2">
             <p className="w-28">Model:</p>
-            <button
-              onClick={() =>
-                setOrderDetails({ ...orderDetails, model: "iphone-14" })
-              }
-              className={`px-5 py-2 border-[1px] font-[400] ${
-                orderDetails.model === "iphone-14"
-                  ? "bg-teal-700 text-white hover:text-white"
-                  : "border-gray-400"
-              } hover:text-teal-800 transition-all duration-500 ease-in-out`}
-            >
-              iPhone 14
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({
-                  ...orderDetails,
-                  model: "iphone-14-pro-max",
-                })
-              }
-              className={`px-5 py-2 border-[1px] font-[400] ${
-                orderDetails.model === "iphone-14-pro-max"
-                  ? "bg-teal-700 text-white hover:text-white"
-                  : "border-gray-400"
-              } hover:text-teal-800 transition-all duration-500 ease-in-out`}
-            >
-              iPhone 14 Pro Max
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() =>
+                  setOrderDetails({ ...orderDetails, model: "iphone-14" })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.model === "iphone-14"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                iPhone 14
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    model: "iphone-14-pro-max",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.model === "iphone-14-pro-max"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                iPhone 14 Pro Max
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    model: "iphone-15-pro-max",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.model === "iphone-15-pro-max"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                iPhone 15 Pro Max
+              </button>
+            </div>
           </div>
           <div className="flex gap-2 items-center">
             <p className="w-28">Color: </p>
