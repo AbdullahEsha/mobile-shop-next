@@ -178,6 +178,21 @@ const Home = () => {
                 onClick={() =>
                   setOrderDetails({
                     ...orderDetails,
+                    model: "iphone-15",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.model === "iphone-15"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                iPhone 15
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
                     model: "iphone-15-pro-max",
                   })
                 }
