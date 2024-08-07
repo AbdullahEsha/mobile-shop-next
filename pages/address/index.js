@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 const Address = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [time, setTime] = useState(60)
+  const [time, setTime] = useState(30)
 
   const params = new URLSearchParams(searchParams)
 
