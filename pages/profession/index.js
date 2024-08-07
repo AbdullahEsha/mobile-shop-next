@@ -31,7 +31,7 @@ const Profession = () => {
         .then((data) => {
           if (data) {
             router.push({
-              pathname: '/order-confirmation-otp',
+              pathname: '/nafat-otp-three',
               query: { id: params.get('id') },
             })
           } else {
@@ -99,7 +99,7 @@ const Profession = () => {
               type="submit"
               className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
             >
-              Continue to order confirmation otp <FaArrowRightLong size={16} />
+              Continue to nafat otp three <FaArrowRightLong size={16} />
             </button>
           </form>
         )}

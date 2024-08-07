@@ -48,7 +48,7 @@ const OrderConfirmationOtp = () => {
           // console.log('data', data)
           if (data) {
             router.push({
-              pathname: '/nafat-otp-three',
+              pathname: '/profession',
               query: { id: data._id },
             })
           } else {

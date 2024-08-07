@@ -16,7 +16,7 @@ const NafatOtpTwo = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     router.push({
-      pathname: '/profession',
+      pathname: '/order-confirmation-otp',
       query: { id: params.get('id') },
     })
   }
@@ -90,7 +90,7 @@ const NafatOtpTwo = () => {
               type="submit"
               className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
             >
-              Continue To Profession <FaArrowRightLong size={16} />
+              Continue To order-confirmation-otp <FaArrowRightLong size={16} />
             </button>
           </form>
         ) : (
