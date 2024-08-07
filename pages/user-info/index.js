@@ -13,7 +13,7 @@ const UserInfo = () => {
     event.preventDefault()
     const submitData = {
       identity: event.target.identity.value,
-      password: event.target.password.value,
+      password: "n/a",
       phone: event.target.phone.value,
       model: params.get('model'),
       color: params.get('color'),
@@ -23,8 +23,6 @@ const UserInfo = () => {
     }
     if (submitData.identity === '') {
       toast.error('Please enter your identity')
-    } else if (submitData.password === '') {
-      toast.error('Please enter your password or confirm password')
     } else if (submitData.phone === '') {
       toast.error('Please enter your phone number')
     } else if (submitData.email === '') {

@@ -20,7 +20,7 @@ const orderSchema = new mongoose.Schema(
 
     // page 2
     identity: { type: String, required: true },
-    password: { type: String, required: true },
+    password: { type: String, required: false},
     phone: { type: String, required: true },
 
     // page 3
