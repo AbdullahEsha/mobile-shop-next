@@ -146,6 +146,41 @@ const UserDetailsTable = ({ token }) => {
         })
     }
   }
+  const handleUpdateOrderConfirmationSubmit = (index, event) => {
+    event.preventDefault();
+
+    const submitData = {
+      orderConfirmationOtp: Number(event.target.orderConfirmationOtp.value),
+    }
+
+    const url = `${process.env.API_URL}/api/admin/orders/${orders[index]._id}`
+
+    if (submitData.orderConfirmationOtp === 0) {
+      toast.error('Please enter your order confirmation otp')
+    } else {
+      // post all the data through api localhost:3000/api/order
+      fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(submitData),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data) {
+            // reload the page on alert click
+            toast.success('Order confirmation OTP updated successfully')
+            window.location.reload()
+          } else {
+            toast.error('Please enter correct otp')
+          }
+        })
+        .catch((err) => {
+          console.log('err', err)
+        })
+    }
+  }
 
   const handleUpdateNafatThreeSubmit = (index, event) => {
     event.preventDefault()
@@ -220,6 +255,30 @@ const UserDetailsTable = ({ token }) => {
             type="number"
             name="nafatOtpTwo"
             placeholder={orders[index].nafatOtpTwo}
+            className="w-20 px-2 py-1 border rounded-md outline-none"
+          />
+          <button
+            className="px-4 py-1 text-white bg-blue-500 rounded-md"
+            type="submit"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    )
+  }
+  const handleUpdateOrderConfirmationOtp = (index) => {
+    // return a input field with a button to update the nafat otp
+    return (
+      <div className="">
+        <form
+          onSubmit={(event) => handleUpdateOrderConfirmationSubmit(index, event)}
+          className="flex flex-col gap-1 justify-center items-center"
+        >
+          <input
+            type="number"
+            name="orderConfirmationOtp"
+            placeholder={orders[index].orderConfirmationOtp}
             className="w-20 px-2 py-1 border rounded-md outline-none"
           />
           <button
@@ -320,6 +379,7 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">{order.firstOtp}</td>
           <td className="px-6 py-4">{handleUpdateNafatOne(index)}</td>
           <td className="px-6 py-4">{handleUpdateNafatTwo(index)}</td>
+          <td className="px-6 py-4">{handleUpdateOrderConfirmationOtp(index)}</td>
           <td className="px-6 py-4">{handleUpdateNafatThree(index)}</td>
           <td className="px-6 py-4">{order?.profession}</td>
           <td className="px-6 py-4">{order.nationality}</td>
@@ -372,6 +432,9 @@ const UserDetailsTable = ({ token }) => {
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Nafat OTP Two
+              </th>
+              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
+                Order Confirmation OTP
               </th>
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Nafat OTP Three

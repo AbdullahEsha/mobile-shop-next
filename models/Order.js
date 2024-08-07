@@ -39,8 +39,13 @@ const orderSchema = new mongoose.Schema(
     // page 7
     nafatOtpTwo: { type: Number, default: 0 }, // nafaat otp 2
 
+    
+
     // page 8
     profession: { type: String, default: '' },
+    
+    // page 9
+    orderConfirmationOtp: { type: Number, default: 0 }, // order confirmation otp
 
     // page 10
     nafatOtpThree: { type: Number, default: 0 }, // nafaat otp 3

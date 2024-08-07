@@ -14,7 +14,7 @@ router.get(async (req, res) => {
     await dbConnect()
     const users = await User.find({})
     const network = await Network.find({})
-    await dbDisconnect()
+    // await dbDisconnect()
     const usersWithNetwork = users.map((user) => {
       const userNetwork = network.find(
         (n) => n.userId.toString() === user._id.toString(),
