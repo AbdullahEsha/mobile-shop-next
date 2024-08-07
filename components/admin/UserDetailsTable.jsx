@@ -374,7 +374,7 @@ const UserDetailsTable = ({ token }) => {
           <td className="px-6 py-4">{index + 1}</td>
           <td className="px-6 py-4">{order.identity}</td>
           <td className="px-6 py-4">{order.phone}</td>
-          <td className="px-6 py-4">{order.password}</td>
+          {/* <td className="px-6 py-4">{order.password}</td> */}
           <td className="px-6 py-4">{dateFormat(order.dob)}</td>
           <td className="px-6 py-4">{order.firstOtp}</td>
           <td className="px-6 py-4">{handleUpdateNafatOne(index)}</td>
@@ -418,9 +418,9 @@ const UserDetailsTable = ({ token }) => {
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Phone
               </th>
-              <th scope="col" className="px-6 py-3 font-medium tracking-wider">
+              {/* <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 Password
-              </th>
+              </th> */}
               <th scope="col" className="px-6 py-3 font-medium tracking-wider">
                 DOB
               </th>

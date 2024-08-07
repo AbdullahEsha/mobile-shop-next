@@ -88,8 +88,8 @@ const UserInfo = () => {
               Username or ID Number
             </label>
           </div>
-          <div className="grid md:grid-cols-2 md:gap-6">
-            <div className="relative z-0 w-full mb-6 group">
+          {/* <div className="grid md:grid-cols-2 md:gap-6"> */}
+            {/* <div className="relative z-0 w-full mb-6 group">
               <input
                 type="text"
                 name="password"
@@ -104,7 +104,7 @@ const UserInfo = () => {
               >
                 Password
               </label>
-            </div>
+            </div> */}
             <div className="relative z-0 w-full mb-6 group">
               <input
                 type="tel"
@@ -122,7 +122,7 @@ const UserInfo = () => {
                 Phone number
               </label>
             </div>
-          </div>
+          {/* </div> */}
           <button
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
