@@ -140,8 +140,8 @@ const Home = () => {
           <hr />
           <h3 className="text-[#333] mb-0 transition ease-in delay-200">
             {orderDetails.model === "iphone-14"
-              ? "iPhone 14"
-              : "iPhone 14 Pro Max"}
+              ? "iPhone 14" : orderDetails.model === "iphone-14-pro-max" ? "iPhone 14 Pro Max" : orderDetails.model === "iphone-15" ? "iphone 15" : "iphone 15 Pro Max"
+            }
           </h3>
           <hr />
           <div className="flex items-start gap-2">
