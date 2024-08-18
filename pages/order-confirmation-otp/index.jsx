@@ -1,45 +1,46 @@
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Import Swiper styles
-import { FaArrowRightLong } from 'react-icons/fa6'
-import { useEffect, useState } from 'react'
-import toast from 'react-hot-toast'
-import SwiperSlider from '@/components/SwiperSlider'
+import { FaArrowRightLong } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import SwiperSlider from "@/components/SwiperSlider";
+import { Button } from "@nextui-org/react";
 
 const OrderConfirmationOtp = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const params = new URLSearchParams(searchParams)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   // a countdown timer function
-  const [time, setTime] = useState(180)
+  const [time, setTime] = useState(90);
   useEffect(() => {
     const timer = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime === 0) {
-          clearInterval(timer)
-          return 0
+          clearInterval(timer);
+          return 0;
         }
-        return prevTime - 1
-      })
-    }, 1000)
-    return () => clearInterval(timer)
-  }, [])
+        return prevTime - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const submitData = {
       orderConfirmationOtp: e.target.orderConfirmationOtp.value,
-    }
+    };
     // console.log("submitData", submitData);
     // console.log('params.get(id)', params.get('id'))
-    if (submitData.orderConfirmationOtp === '') {
-      toast.error('Please enter your order confirmation otp')
+    if (submitData.orderConfirmationOtp === "") {
+      toast.error("Please enter your order confirmation otp");
     } else {
       // post all the data through api localhost:3000/api/order
-      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
-        method: 'PATCH',
+      fetch(`${process.env.API_URL}/api/order/${params.get("id")}`, {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(submitData),
       })
@@ -48,22 +49,24 @@ const OrderConfirmationOtp = () => {
           // console.log('data', data)
           if (data) {
             router.push({
-              pathname: '/profession',
+              pathname: "/profession",
               query: { id: data._id },
-            })
+            });
           } else {
-            toast.error('Please enter correct otp')
+            toast.error("Please enter correct otp");
           }
-        })
+        });
     }
-  }
+  };
 
   return (
     <>
       {/* create a form so that I can add user-name, email, phone number etc add some design also */}
       <SwiperSlider />
       <div className="max-w-[1400px] mx-auto flex flex-col justify-center items-center ">
-        <h1 className="text-4xl font-bold text-gray-600 mt-10">Order Confirmation OTP</h1>
+        <h1 className="text-4xl font-bold text-gray-600 mt-10">
+          Order Confirmation OTP
+        </h1>
         {/* a countdown timer for 180s design */}
         <div className="flex justify-center items-center gap-2 mt-5 border-4 h-28 w-28 rounded-full">
           <h1 className="text-2xl font-bold text-gray-600 m-0">
@@ -89,17 +92,24 @@ const OrderConfirmationOtp = () => {
               Enter Order Confirmation OTP
             </label>
           </div>
-          <button
+          {/* <button
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
             Next <FaArrowRightLong size={16} />
-          </button>
+          </button> */}
+          <Button
+            color="primary"
+            type="submit"
+            className={`w-full text-white h-12 bg-[#0D9488]`}
+          >
+            Submit OTP <FaArrowRightLong size={16} />
+          </Button>
         </form>
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
-  )
-}
+  );
+};
 
-export default OrderConfirmationOtp
+export default OrderConfirmationOtp;
