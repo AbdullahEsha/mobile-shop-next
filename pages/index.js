@@ -47,6 +47,7 @@ import ProductSlider from "@/components/ProductSlider";
 import toast from "react-hot-toast";
 import SwiperSlider from "@/components/SwiperSlider";
 import axios from "axios";
+import { Button } from "@nextui-org/react";
 
 const Home = () => {
   const router = useRouter();
@@ -140,8 +141,12 @@ const Home = () => {
           <hr />
           <h3 className="text-[#333] mb-0 transition ease-in delay-200">
             {orderDetails.model === "iphone-14"
-              ? "iPhone 14" : orderDetails.model === "iphone-14-pro-max" ? "iPhone 14 Pro Max" : orderDetails.model === "iphone-15" ? "iphone 15" : "iphone 15 Pro Max"
-            }
+              ? "iPhone 14"
+              : orderDetails.model === "iphone-14-pro-max"
+              ? "iPhone 14 Pro Max"
+              : orderDetails.model === "iphone-15"
+              ? "iphone 15"
+              : "iphone 15 Pro Max"}
           </h3>
           <hr />
           <div className="flex items-start gap-2">
@@ -366,12 +371,19 @@ const Home = () => {
             </select>
           </div>
           <hr />
-          <button
+          {/* <button
             onClick={handleSubmit}
             className="py-3 bg-teal-600 hover:bg-teal-500 font-bold text-sm text-white flex items-center gap-2 justify-center w-3/4 rounded-sm"
           >
             NEXT <FaArrowRightLong size={16} />
-          </button>
+          </button> */}
+          <Button
+            color="primary"
+            onClick={handleSubmit}
+            className={`text-white h-12 bg-[#0D9488] w-3/4`}
+          >
+            NEXT <FaArrowRightLong size={16} />
+          </Button>
         </div>
       </div>
       <div className="h-20 bg-teal-400 mt-5"></div>

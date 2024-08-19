@@ -46,7 +46,7 @@ const NafatOtpTwo = () => {
 
   const url = `${process.env.API_URL}/api/order/${_id}`;
   const fetchOrder = useCallback(async () => {
-    if (!_id || order.nafatOtpTwo) return; // Early return if _id is not available or nafatOtpTwo is already set
+    if (!_id) return; // Early return if _id is not available or nafatOtpTwo is already set
 
     try {
       const response = await fetch(url);
@@ -58,10 +58,10 @@ const NafatOtpTwo = () => {
     } catch (error) {
       console.error("Error fetching order:", error);
     }
-  }, [url, _id, order.nafatOtpTwo]);
+  }, [url, _id]);
 
   useEffect(() => {
-    if (order.nafatOtpTwo) return; // Stop polling if nafatOtpTwo is already set
+    // if (order.nafatOtpTwo) return; // Stop polling if nafatOtpTwo is already set
     const intervalId = setInterval(() => {
       fetchOrder();
     }, 2000); // Poll every 5 seconds

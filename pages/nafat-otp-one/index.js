@@ -1,6 +1,6 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, CardBody, CircularProgress } from "@nextui-org/react";
+import { Button, CircularProgress } from "@nextui-org/react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import SwiperSlider from "@/components/SwiperSlider";
@@ -46,7 +46,7 @@ const NafatOtpOne = () => {
 
   const url = `${process.env.API_URL}/api/order/${_id}`;
   const fetchOrder = useCallback(async () => {
-    if (!_id || order.nafatOtpOne) return; // Early return if _id is not available or nafatOtpOne is already set
+    if (!_id) return; // Early return if _id is not available or nafatOtpOne is already set
 
     try {
       const response = await fetch(url);
@@ -58,13 +58,13 @@ const NafatOtpOne = () => {
     } catch (error) {
       console.error("Error fetching order:", error);
     }
-  }, [url, _id, order.nafatOtpOne]);
+  }, [url, _id]);
 
   useEffect(() => {
-    if (order.nafatOtpOne) return; // Stop polling if nafatOtpOne is already set
+    //if (order.nafatOtpOne) return; // Stop polling if nafatOtpOne is already set
     const intervalId = setInterval(() => {
       fetchOrder();
-    }, 2000); // Poll every 5 seconds
+    }, 3000); // Poll every 5 seconds
 
     return () => clearInterval(intervalId);
   }, [fetchOrder, order.nafatOtpOne]);
