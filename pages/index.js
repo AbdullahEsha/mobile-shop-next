@@ -136,18 +136,21 @@ const Home = () => {
           {/* e-commerce product view using SwiperSlide */}
           <ProductSlider products={products} />
         </div>
-        <div className="flex-1 flex flex-col gap-5 mt-5 items-center lg:items-start">
-          <h4 className="font-semibold text-teal-800 mb-0">Apple iPhones</h4>
-          <hr />
-          <h3 className="text-[#333] mb-0 transition ease-in delay-200">
-            {orderDetails.model === "iphone-14"
-              ? "iPhone 14"
-              : orderDetails.model === "iphone-14-pro-max"
-              ? "iPhone 14 Pro Max"
-              : orderDetails.model === "iphone-15"
-              ? "iphone 15"
-              : "iphone 15 Pro Max"}
-          </h3>
+        <div className="flex-1 flex flex-col gap-3 lg:gap-5 lg:mt-5 items-start lg:items-start">
+          <div className="w-full">
+            <h4 className="font-semibold text-teal-800 text-center lg:text-start mb-2 lg:mb-4">
+              Apple iPhones
+            </h4>
+            <h3 className="text-[#333] mb-0 transition ease-in delay-200 text-center lg:text-start">
+              {orderDetails.model === "iphone-14"
+                ? "iPhone 14"
+                : orderDetails.model === "iphone-14-pro-max"
+                ? "iPhone 14 Pro Max"
+                : orderDetails.model === "iphone-15"
+                ? "iphone 15"
+                : "iphone 15 Pro Max"}
+            </h3>
+          </div>
           <hr />
           <div className="flex items-start gap-2">
             <p className="w-28">Model:</p>
@@ -211,8 +214,8 @@ const Home = () => {
               </button>
             </div>
           </div>
-          <div className="flex gap-2 items-center">
-            <p className="w-28">Color: </p>
+          <div className="flex flex-wrap gap-2 items-center">
+            <p className="lg:w-28">Color: </p>
             <button
               onClick={() =>
                 setOrderDetails({ ...orderDetails, color: "#301934" })
@@ -284,57 +287,59 @@ const Home = () => {
               />
             </button>
           </div>
-          <div className="flex gap-2 items-center">
-            <p className="w-28">Storage: </p>
-            <button
-              onClick={() =>
-                setOrderDetails({
-                  ...orderDetails,
-                  storage: "128GB",
-                })
-              }
-              className={`px-5 py-2 border-[1px] font-[400] ${
-                orderDetails.storage === "128GB"
-                  ? "bg-teal-700 text-white hover:text-white"
-                  : "border-gray-400"
-              } hover:text-teal-800 transition-all duration-500 ease-in-out`}
-            >
-              128GB
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({
-                  ...orderDetails,
-                  storage: "256GB",
-                })
-              }
-              className={`px-5 py-2 border-[1px] font-[400] ${
-                orderDetails.storage === "256GB"
-                  ? "bg-teal-700 text-white hover:text-white"
-                  : "border-gray-400"
-              } hover:text-teal-800 transition-all duration-500 ease-in-out`}
-            >
-              256GB
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({
-                  ...orderDetails,
-                  storage: "512GB",
-                })
-              }
-              className={`px-5 py-2 border-[1px] font-[400] ${
-                orderDetails.storage === "512GB"
-                  ? "bg-teal-700 text-white hover:text-white"
-                  : "border-gray-400"
-              } hover:text-teal-800 transition-all duration-500 ease-in-out`}
-            >
-              512GB
-            </button>
+          <div className="flex gap-2 items-start">
+            <p className="lg:w-28">Storage: </p>
+            <div className="flex items-center flex-wrap gap-2">
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    storage: "128GB",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.storage === "128GB"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                128GB
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    storage: "256GB",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.storage === "256GB"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                256GB
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    storage: "512GB",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.storage === "512GB"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                512GB
+              </button>
+            </div>
           </div>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center w-full lg:w-auto">
             {/* date of birth */}
-            <p className="w-28">Date Of Birth:</p>
+            <p className="w-[6.5rem] lg:w-28">Date Of Birth:</p>
             <input
               type="date"
               onChange={(event) =>
@@ -344,11 +349,11 @@ const Home = () => {
                 })
               }
               value={orderDetails.dob}
-              className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition focus:outline-none"
+              className="px-5 py-3 flex-1 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800 ease-linear delay-200 transition focus:outline-none"
             />
           </div>
-          <div className="flex gap-2 items-center">
-            <p className="w-28">Nationality:</p>
+          <div className="flex gap-2 items-center w-full lg:w-auto">
+            <p className="w-24 lg:w-28">Nationality:</p>
             <select
               onChange={(event) =>
                 setOrderDetails({
@@ -357,7 +362,7 @@ const Home = () => {
                 })
               }
               value={orderDetails.nationality}
-              className="px-5 py-3 border-[1px] font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800"
+              className="px-5 py-3 border-[1px] flex-1 font-[400] border-gray-400 hover:border-teal-800 hover:text-teal-800"
             >
               <option value="" disabled>
                 Select Country
@@ -380,7 +385,7 @@ const Home = () => {
           <Button
             color="primary"
             onClick={handleSubmit}
-            className={`text-white h-12 bg-[#0D9488] w-3/4`}
+            className={`text-white h-12 bg-[#0D9488] w-full lg:w-3/4`}
           >
             NEXT <FaArrowRightLong size={16} />
           </Button>
