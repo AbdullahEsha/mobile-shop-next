@@ -47,7 +47,7 @@ import ProductSlider from "@/components/ProductSlider";
 import toast from "react-hot-toast";
 import SwiperSlider from "@/components/SwiperSlider";
 import axios from "axios";
-import { Button } from "@nextui-org/react";
+import { Button, Select, SelectItem } from "@nextui-org/react";
 
 const Home = () => {
   const router = useRouter();
@@ -56,12 +56,14 @@ const Home = () => {
   // const [countries, setCountries] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState({
-    model: "",
+    model: "iphone-14",
     color: "",
     storage: "",
     nationality: "Bangladesh",
     dob: "",
   });
+
+  // console.log("order details", orderDetails);
 
   const countryList = [
     "Bangladesh",
@@ -87,29 +89,6 @@ const Home = () => {
     "Sri Lanka",
     "Syria",
   ];
-
-  // useEffect(() => {
-  //   const fetchCountries = async () => {
-  //     try {
-  //       setIsLoading(true);
-  //       const response = await axios.get("https://restcountries.com/v3.1/all");
-  //       const countryNames = response.data.map(
-  //         (country) => country.name.common
-  //       );
-  //       setCountries(countryNames);
-  //       setIsLoading(false);
-  //     } catch (error) {
-  //       setIsLoading(false);
-  //       console.error("Error fetching countries:", error);
-  //     }
-  //   };
-
-  //   fetchCountries();
-  // }, []);
-
-  // console.log("countries", countries);
-
-  // console.log("isloaing", isLoading);
 
   const handleSubmit = () => {
     if (
@@ -137,7 +116,7 @@ const Home = () => {
           <ProductSlider products={products} />
         </div>
         <div className="flex-1 flex flex-col gap-3 lg:gap-5 lg:mt-5 items-start lg:items-start">
-          <div className="w-full">
+          <div className="w-full mb-2">
             <h4 className="font-semibold text-teal-800 text-center lg:text-start mb-2 lg:mb-4">
               Apple iPhones
             </h4>
@@ -151,7 +130,7 @@ const Home = () => {
                 : "iphone 15 Pro Max"}
             </h3>
           </div>
-          <hr />
+          {/* <hr /> */}
           <div className="flex items-start gap-2">
             <p className="w-28">Model:</p>
             <div className="flex flex-wrap gap-3">
@@ -375,13 +354,6 @@ const Home = () => {
               ))}
             </select>
           </div>
-          <hr />
-          {/* <button
-            onClick={handleSubmit}
-            className="py-3 bg-teal-600 hover:bg-teal-500 font-bold text-sm text-white flex items-center gap-2 justify-center w-3/4 rounded-sm"
-          >
-            NEXT <FaArrowRightLong size={16} />
-          </button> */}
           <Button
             color="primary"
             onClick={handleSubmit}
