@@ -1,18 +1,33 @@
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import "react-phone-number-input/style.css";
+// import PhoneInput from "react-phone-number-input";
 import toast from "react-hot-toast";
 import SwiperSlider from "@/components/SwiperSlider";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
+// import PhoneInput from 'react-phone-number-input';
+import "react-phone-number-input/style.css";
 
 const UserInfo = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const [userName, setUserName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(null);
   const [isFormSubmit, setIsFormSubmit] = useState(false);
+  // const [value, setValue] = useState("+966");
+
+  // // Create a custom input component with forwardRef and assign a display name
+  // const CustomInput = forwardRef(({ ...props }, ref) => (
+  //   <input
+  //     ref={ref}
+  //     {...props}
+  //     className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
+  //   />
+  // ));
+
+  // // Assign a display name to the custom input component
+  // CustomInput.displayName = "CustomInput";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -129,15 +144,38 @@ const UserInfo = () => {
                 Password
               </label>
             </div> */}
-          <div className="relative z-0 w-full mb-6 group">
-            <input
-              type="tel"
-              // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-              name="phone"
-              id="phone"
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
-              placeholder=" "
-              required
+          <div>
+            {/* <PhoneInput
+              placeholder="Enter phone number"
+              value={value}
+              onChange={setValue}
+            /> */}
+            <div className="relative z-0 w-full mb-6 group">
+              <input
+                type="tel"
+                // pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                name="phone"
+                id="phone"
+                defaultValue="+966"
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none  dark:border-gray-600 dark:focus:border-teal-500 focus:outline-none focus:ring-0 focus:border-teal-600 peer"
+                placeholder=" "
+                required
+              />
+              <label
+                htmlFor="phone"
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-teal-600 peer-focus:dark:text-teal-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                Phone number
+              </label>
+            </div>
+          </div>
+          {/* <div className="relative z-0 w-full mb-6 group">
+            <PhoneInput
+              placeholder="Enter phone number"
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              defaultCountry="SA"
+              inputComponent={CustomInput} // Pass the custom input component
             />
             <label
               htmlFor="phone"
@@ -145,7 +183,7 @@ const UserInfo = () => {
             >
               Phone number
             </label>
-          </div>
+          </div> */}
           {/* </div> */}
           {/* <button
             type="submit"
