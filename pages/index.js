@@ -59,7 +59,7 @@ const Home = () => {
     model: "iphone-14",
     color: "",
     storage: "",
-    nationality: "Bangladesh",
+    nationality: "",
     dob: "",
   });
 
