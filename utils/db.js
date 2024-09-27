@@ -33,6 +33,8 @@ if (!cached) {
 }
 
 export const dbConnect = async () => {
+  console.log("connecting db");
+
   if (cached.conn) {
     return cached.conn;
   }
@@ -50,6 +52,8 @@ export const dbConnect = async () => {
   }
 
   cached.conn = await cached.promise;
+
+  console.log("connected");
   return cached.conn;
 };
 

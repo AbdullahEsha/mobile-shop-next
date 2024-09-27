@@ -1,8 +1,9 @@
 import { createRouter } from "next-connect";
 import Order from "@/models/Order";
-import { dbConnect } from "@/utils/db";
+// import { dbConnect, dbDisconnect } from "@/utils/db";
 import { onError } from "@/utils/error";
 import { isAdmin, isAuth } from "@/utils/auth";
+import { dbConnect, dbDisconnect } from "@/utils/db";
 
 const router = createRouter({ onError });
 
@@ -30,15 +31,15 @@ router.get(async (req, res) => {
       .limit(limit);
 
     const totalOrders = await Order.countDocuments();
-
+    await dbDisconnect();
     res.status(200).json({
       orders,
       totalPages: Math.ceil(totalOrders / limit),
       currentPage: page,
     });
   } catch (error) {
-    console.error("Error fetching orders:", error);
-    res.status(500).json({ error: "Failed to fetch orders" });
+    console.error("Error fetching orders for orders:", error);
+    // res.status(500).json({ error: "Failed to fetch orders" });
   }
 });
 
