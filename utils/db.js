@@ -1,25 +1,61 @@
-import mongoose from 'mongoose'
+// import mongoose from "mongoose";
 
-const connection = {}
+// let isConnected = false; // track the connection status
 
-const dbConnect = async () => {
-  if (connection.isConnected) {
-    return
-  }
+// export const dbConnect = async () => {
+//   if (isConnected) {
+//     console.log("Already connected to the database.");
+//     return;
+//   }
+//   try {
+//     const connection = await mongoose.connect(process.env.MONGODB_URL);
 
-  const db = await mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+//     isConnected = connection.connections[0].readyState === 1;
+//     console.log("Connected to the database");
+//   } catch (error) {
+//     console.error("Error connecting to the database:", error);
+//     throw error;
+//   }
+// };
 
-  connection.isConnected = db.connections[0].readyState
+// export const dbDisconnect = async () => {
+//   await mongoose.disconnect();
+//   isConnected = false;
+//   console.log("Disconnected from the database");
+// };
+
+import mongoose from "mongoose";
+
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-const dbDisconnect = async () => {
-  if (connection.isConnected) {
-    await mongoose.disconnect()
-    connection.isConnected = false
+export const dbConnect = async () => {
+  if (cached.conn) {
+    return cached.conn;
   }
-}
 
-export { dbConnect, dbDisconnect }
+  if (!cached.promise) {
+    const options = {
+      bufferCommands: false, // Disable buffering to avoid issues
+    };
+
+    cached.promise = mongoose
+      .connect(process.env.MONGODB_URL, options)
+      .then((mongoose) => {
+        return mongoose;
+      });
+  }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
+};
+
+// We no longer use dbDisconnect unless necessary, so the pool stays open
+export const dbDisconnect = async () => {
+  if (process.env.NODE_ENV === "production") {
+    await mongoose.disconnect();
+  }
+};
