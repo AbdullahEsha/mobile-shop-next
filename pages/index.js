@@ -127,7 +127,11 @@ const Home = () => {
                 ? "iPhone 14 Pro Max"
                 : orderDetails.model === "iphone-15"
                 ? "iphone 15"
-                : "iphone 15 Pro Max"}
+                : orderDetails.model === "iphone-15-pro-max"
+                ? "iphone 15 Pro Max"
+                : orderDetails.model === "iphone-16"
+                ? "iphone 16"
+                : "iphone 16 Pro Max"}
             </h3>
           </div>
           {/* <hr /> */}
@@ -190,6 +194,36 @@ const Home = () => {
                 } hover:text-teal-800 transition-all duration-500 ease-in-out`}
               >
                 iPhone 15 Pro Max
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    model: "iphone-16",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.model === "iphone-16"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                iPhone 16
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    model: "iphone-16-pro-max",
+                  })
+                }
+                className={`px-5 py-2 border-[1px] font-[400] ${
+                  orderDetails.model === "iphone-16-pro-max"
+                    ? "bg-teal-700 text-white hover:text-white"
+                    : "border-gray-400"
+                } hover:text-teal-800 transition-all duration-500 ease-in-out`}
+              >
+                iPhone 16 pro max
               </button>
             </div>
           </div>
