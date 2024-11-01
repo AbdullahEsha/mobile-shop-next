@@ -52,42 +52,80 @@ import { Button, Select, SelectItem } from "@nextui-org/react";
 const Home = () => {
   const router = useRouter();
 
-  // use api to get all cuntries and map them to select options, from https://restcountries.com/v3.1/all api
-  // const [countries, setCountries] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState({
-    model: "iphone-14",
+    model: "iphone 14",
     color: "",
-    storage: "",
+    storage: "128GB",
     nationality: "",
     dob: "",
   });
 
-  // console.log("order details", orderDetails);
+  console.log("order details", orderDetails);
+
+  const modelList = [
+    {
+      key: "iphone 14",
+      label: "iphone 14",
+    },
+    {
+      key: "iphone 14 Pro Max",
+      label: "iphone 14 Pro Max",
+    },
+    {
+      key: "iphone 15",
+      label: "iphone 15",
+    },
+    {
+      key: "iphone 15 Pro Max",
+      label: "iphone 15 Pro Max",
+    },
+    {
+      key: "iphone 16",
+      label: "iphone 16",
+    },
+    {
+      key: "iphone 16 Pro Max",
+      label: "iphone 16 Pro Max",
+    },
+  ];
+  const storageList = [
+    {
+      key: "128GB",
+      label: "128GB",
+    },
+    {
+      key: "256GB",
+      label: "256GB",
+    },
+    {
+      key: "512GB",
+      label: "512GB",
+    },
+  ];
 
   const countryList = [
-    "Bangladesh",
-    "India",
-    "Pakistan",
-    "Philippines",
-    "Nepal",
-    "Saudi Arabia",
-    "Afghanistan",
-    "Egypt",
-    "Ghana",
-    "Granada",
-    "France",
-    "Ehiopia",
-    "Indonesia",
-    "Iran",
-    "Kenya",
-    "Lebanon",
-    "Morocco",
-    "Palestine",
-    "Yemen",
-    "Uganda",
-    "Sri Lanka",
-    "Syria",
+    { key: "Bangladesh", label: "Bangladesh" },
+    { key: "India", label: "India" },
+    { key: "Pakistan", label: "Pakistan" },
+    { key: "Philippines", label: "Philippines" },
+    { key: "Nepal", label: "Nepal" },
+    { key: "Saudi Arabia", label: "Saudi Arabia" },
+    { key: "Afghanistan", label: "Afghanistan" },
+    { key: "Egypt", label: "Egypt" },
+    { key: "Ghana", label: "Ghana" },
+    { key: "Granada", label: "Granada" },
+    { key: "France", label: "France" },
+    { key: "Ehiopia", label: "Ehiopia" },
+    { key: "Indonesia", label: "Indonesia" },
+    { key: "Iran", label: "Iran" },
+    { key: "Kenya", label: "Kenya" },
+    { key: "Lebanon", label: "Lebanon" },
+    { key: "Morocco", label: "Morocco" },
+    { key: "Palestine", label: "Palestine" },
+    { key: "Yemen", label: "Yemen" },
+    { key: "Uganda", label: "Uganda" },
+    { key: "Sri Lanka", label: "Sri Lanka" },
+    { key: "Syria", label: "Syria" },
   ];
 
   const handleSubmit = () => {
@@ -121,21 +159,21 @@ const Home = () => {
               Apple iPhones
             </h4>
             <h3 className="text-[#333] mb-0 transition ease-in delay-200 text-center lg:text-start">
-              {orderDetails.model === "iphone-14"
+              {orderDetails.model === "iphone 14"
                 ? "iPhone 14"
-                : orderDetails.model === "iphone-14-pro-max"
+                : orderDetails.model === "iphone 14 Pro Max"
                 ? "iPhone 14 Pro Max"
-                : orderDetails.model === "iphone-15"
+                : orderDetails.model === "iphone 15"
                 ? "iphone 15"
-                : orderDetails.model === "iphone-15-pro-max"
+                : orderDetails.model === "iphone 15 Pro Max"
                 ? "iphone 15 Pro Max"
-                : orderDetails.model === "iphone-16"
+                : orderDetails.model === "iphone 16"
                 ? "iphone 16"
                 : "iphone 16 Pro Max"}
             </h3>
           </div>
           {/* <hr /> */}
-          <div className="flex items-start gap-2">
+          {/* <div className="flex items-start gap-2">
             <p className="w-28">Model:</p>
             <div className="flex flex-wrap gap-3">
               <button
@@ -226,83 +264,122 @@ const Home = () => {
                 iPhone 16 pro max
               </button>
             </div>
+          </div> */}
+          {/* model selection */}
+          <div className="flex gap-2 items-center w-full lg:w-auto">
+            <p className="w-20 lg:w-28">Model:</p>
+            <div className="w-60">
+              <Select
+                onChange={(e) =>
+                  setOrderDetails({ ...orderDetails, model: e.target.value })
+                }
+                label="Select iPhone Model"
+                defaultSelectedKeys={"all"}
+                className="max-w-xs"
+              >
+                {modelList.map((animal) => (
+                  <SelectItem key={animal.key} value={animal.label}>
+                    {animal.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-2 items-center">
-            <p className="lg:w-28">Color: </p>
-            <button
-              onClick={() =>
-                setOrderDetails({ ...orderDetails, color: "#301934" })
-              }
-              className="h-12 w-12 rounded-full bg-[#301934] flex justify-center items-center"
-            >
-              <GiCheckMark
-                size={20}
-                color={`${
-                  orderDetails.color === "#301934" ? "#fff" : "#301934"
-                }`}
-                className="transition ease-in delay-200"
-              />
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({ ...orderDetails, color: "#215E7C" })
-              }
-              className="h-12 w-12 rounded-full bg-[#215E7C] flex justify-center items-center"
-            >
-              <GiCheckMark
-                size={20}
-                color={`${
-                  orderDetails.color === "#215E7C" ? "#fff" : "#215E7C"
-                }`}
-                className="transition ease-in delay-200"
-              />
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({ ...orderDetails, color: "#A50011" })
-              }
-              className="h-12 w-12 rounded-full bg-[#A50011] flex justify-center items-center"
-            >
-              <GiCheckMark
-                size={20}
-                color={`${
-                  orderDetails.color === "#A50011" ? "#fff" : "#A50011"
-                }`}
-                className="transition ease-in delay-200"
-              />
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({ ...orderDetails, color: "#F9E5C9" })
-              }
-              className="h-12 w-12 rounded-full bg-[#F9E5C9] flex justify-center items-center"
-            >
-              <GiCheckMark
-                size={20}
-                color={`${
-                  orderDetails.color === "#F9E5C9" ? "#fff" : "#F9E5C9"
-                }`}
-                className="transition ease-in delay-200"
-              />
-            </button>
-            <button
-              onClick={() =>
-                setOrderDetails({ ...orderDetails, color: "#5C5B57" })
-              }
-              className="h-12 w-12 rounded-full bg-[#5C5B57] flex justify-center items-center"
-            >
-              <GiCheckMark
-                size={20}
-                color={`${
-                  orderDetails.color === "#5C5B57" ? "#fff" : "#5C5B57"
-                }`}
-                className="transition ease-in delay-200"
-              />
-            </button>
+          <div className="flex justify-between items-center">
+            <p className="w-20 lg:w-28">Color: </p>
+            <div className="flex items-center flex-wrap gap-1">
+              <button
+                onClick={() =>
+                  setOrderDetails({ ...orderDetails, color: "#301934" })
+                }
+                className="w-10 h-10 lg:h-12 lg:w-12 rounded-full bg-[#301934] flex justify-center items-center"
+              >
+                <GiCheckMark
+                  size={20}
+                  color={`${
+                    orderDetails.color === "#301934" ? "#fff" : "#301934"
+                  }`}
+                  className="transition ease-in delay-200"
+                />
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({ ...orderDetails, color: "#215E7C" })
+                }
+                className="w-10 h-10 lg:h-12 lg:w-12 rounded-full bg-[#215E7C] flex justify-center items-center"
+              >
+                <GiCheckMark
+                  size={20}
+                  color={`${
+                    orderDetails.color === "#215E7C" ? "#fff" : "#215E7C"
+                  }`}
+                  className="transition ease-in delay-200"
+                />
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({ ...orderDetails, color: "#A50011" })
+                }
+                className="w-10 h-10 lg:h-12 lg:w-12 rounded-full bg-[#A50011] flex justify-center items-center"
+              >
+                <GiCheckMark
+                  size={20}
+                  color={`${
+                    orderDetails.color === "#A50011" ? "#fff" : "#A50011"
+                  }`}
+                  className="transition ease-in delay-200"
+                />
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({ ...orderDetails, color: "#F9E5C9" })
+                }
+                className="w-10 h-10 lg:h-12 lg:w-12 rounded-full bg-[#F9E5C9] flex justify-center items-center"
+              >
+                <GiCheckMark
+                  size={20}
+                  color={`${
+                    orderDetails.color === "#F9E5C9" ? "#fff" : "#F9E5C9"
+                  }`}
+                  className="transition ease-in delay-200"
+                />
+              </button>
+              <button
+                onClick={() =>
+                  setOrderDetails({ ...orderDetails, color: "#5C5B57" })
+                }
+                className="w-10 h-10 lg:h-12 lg:w-12 rounded-full bg-[#5C5B57] flex justify-center items-center"
+              >
+                <GiCheckMark
+                  size={20}
+                  color={`${
+                    orderDetails.color === "#5C5B57" ? "#fff" : "#5C5B57"
+                  }`}
+                  className="transition ease-in delay-200"
+                />
+              </button>
+            </div>
           </div>
           <div className="flex gap-2 items-start">
-            <p className="lg:w-28">Storage: </p>
-            <div className="flex items-center flex-wrap gap-2">
+            <p className="w-20 lg:w-28">Storage: </p>
+            <div className="w-60">
+              <Select
+                value={orderDetails.storage}
+                onChange={(e) =>
+                  setOrderDetails({ ...orderDetails, storage: e.target.value })
+                }
+                defaultSelectedKeys={"all"}
+                label="Select Storage"
+                className="max-w-xs"
+              >
+                {storageList.map((animal) => (
+                  <SelectItem key={animal.key} value={animal.label}>
+                    {animal.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+            {/* <div className="flex items-center flex-wrap gap-2">
               <button
                 onClick={() =>
                   setOrderDetails({
@@ -348,7 +425,7 @@ const Home = () => {
               >
                 512GB
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="flex gap-2 items-center w-full lg:w-auto">
             {/* date of birth */}
@@ -366,6 +443,27 @@ const Home = () => {
             />
           </div>
           <div className="flex gap-2 items-center w-full lg:w-auto">
+            <p className="w-20 lg:w-28">Country:</p>
+            <div className="w-60">
+              <Select
+                onChange={(e) =>
+                  setOrderDetails({
+                    ...orderDetails,
+                    nationality: e.target.value,
+                  })
+                }
+                label="Select Country"
+                className="max-w-xs"
+              >
+                {countryList.map((country) => (
+                  <SelectItem key={country.key} value={country.label}>
+                    {country.label}
+                  </SelectItem>
+                ))}
+              </Select>
+            </div>
+          </div>
+          {/* <div className="flex gap-2 items-center w-full lg:w-auto">
             <p className="w-24 lg:w-28">Nationality:</p>
             <select
               onChange={(event) =>
@@ -387,7 +485,7 @@ const Home = () => {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
           <Button
             color="primary"
             onClick={handleSubmit}
