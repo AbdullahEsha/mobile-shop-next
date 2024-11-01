@@ -53,9 +53,9 @@ const Home = () => {
   const router = useRouter();
 
   const [orderDetails, setOrderDetails] = useState({
-    model: "iphone 14",
+    model: "",
     color: "",
-    storage: "128GB",
+    storage: "",
     nationality: "",
     dob: "",
   });
@@ -274,7 +274,7 @@ const Home = () => {
                   setOrderDetails({ ...orderDetails, model: e.target.value })
                 }
                 label="Select iPhone Model"
-                defaultSelectedKeys={"all"}
+                // defaultSelectedKeys={"all"}
                 className="max-w-xs"
               >
                 {modelList.map((animal) => (
@@ -368,7 +368,7 @@ const Home = () => {
                 onChange={(e) =>
                   setOrderDetails({ ...orderDetails, storage: e.target.value })
                 }
-                defaultSelectedKeys={"all"}
+                // defaultSelectedKeys={"all"}
                 label="Select Storage"
                 className="max-w-xs"
               >
